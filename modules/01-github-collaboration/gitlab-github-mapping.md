@@ -8,17 +8,15 @@ A side-by-side reference for teams transitioning from GitLab to GitHub.
 
 | Concept | GitLab | GitHub |
 |---------|--------|--------|
+| Group | Group | Organization |
+| Project | Project | Repository |
 | Code review request | Merge Request (MR) | Pull Request (PR) |
 | Artifacts | `artifacts:` | `actions/upload-artifact` |
 | Environment variables | CI/CD Variables | Secrets / Variables / Env |
 | Protected environments | Protected environments | Environments + protection rules |
 | Code ownership | CODEOWNERS | CODEOWNERS (same file format) |
 | Branch rules | Protected branches | Branch protection rules |
-| Group | Group | Organization |
-| Project | Project | Repository |
 | Fork | Fork | Fork |
-| Wiki | Wiki | Wiki |
-| Snippets | Snippets | Gists |
 | Issue board | Issue board | Projects (beta) |
 | Package registry | Package Registry | GitHub Packages |
 | Container registry | Container Registry | GitHub Container Registry (ghcr.io) |
