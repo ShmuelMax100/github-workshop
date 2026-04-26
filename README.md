@@ -4,15 +4,9 @@
 
 ---
 
-## Prerequisites
+## Before you start
 
-- GitHub account with access to this repository
-- [GitHub CLI (`gh`)](https://cli.github.com/) installed and authenticated
-- Git configured locally
-
-```bash
-gh auth status && git --version && gh --version
-```
+→ **[START-HERE.md](./START-HERE.md)** — fork the repo, install `gh`, run the sample app. Do this before the session.
 
 ---
 
@@ -29,6 +23,7 @@ gh auth status && git --version && gh --version
 | Repository lifecycle: CODEOWNERS, merge controls, metadata | [repository-lifecycle.md](./modules/01-github-collaboration/repository-lifecycle.md) |
 | Quick UI flows: search, blame, compare | [quick-ui-flows.md](./modules/01-github-collaboration/quick-ui-flows.md) |
 | **Hands-on exercise** | [exercises/exercise.md](./modules/01-github-collaboration/exercises/exercise.md) |
+| Solution | [solutions/01-pr-workflow/](./solutions/01-pr-workflow/) |
 
 ---
 
@@ -46,6 +41,7 @@ gh auth status && git --version && gh --version
 | Runners: hosted vs self-hosted | [runners-guide.md](./modules/02-github-actions/runners-guide.md) |
 | Manual triggers (`workflow_dispatch`) | [manual-triggers.md](./modules/02-github-actions/manual-triggers.md) |
 | **Hands-on exercise** | [exercises/exercise.md](./modules/02-github-actions/exercises/exercise.md) |
+| Solution | [solutions/02-ci-workflow/](./solutions/02-ci-workflow/) |
 
 ---
 
@@ -57,6 +53,7 @@ gh auth status && git --version && gh --version
 | Artifacts: upload, download, share | [artifacts.md](./modules/03-operations-debugging/artifacts.md) |
 | Debugging: step debug, annotations, summaries | [debugging-guide.md](./modules/03-operations-debugging/debugging-guide.md) |
 | **Hands-on exercise** | [exercises/exercise.md](./modules/03-operations-debugging/exercises/exercise.md) |
+| Solution | [solutions/03-debugging/](./solutions/03-debugging/) |
 
 ---
 
@@ -71,9 +68,10 @@ gh auth status && git --version && gh --version
 
 ---
 
-## Quick Reference
+## Reference
 
-- [Cheat Sheet](./resources/cheatsheet.md) — one page covering all topics
-- [GitHub Docs](https://docs.github.com)
-- [GitHub Actions Marketplace](https://github.com/marketplace?type=actions)
-- [GitHub CLI Manual](https://cli.github.com/manual/)
+| | |
+|-|-|
+| Quick reference card | [cheatsheet.md](./resources/cheatsheet.md) |
+| Instructor timing & demo script | [INSTRUCTOR-GUIDE.md](./INSTRUCTOR-GUIDE.md) |
+| [GitHub Docs](https://docs.github.com) | [GitHub CLI Manual](https://cli.github.com/manual/) |
