@@ -55,11 +55,71 @@ git push -u origin feature/<your-name>/hello-world
 
 1. Go to the repository on GitHub
 2. You'll see a banner: **"Compare & pull request"** — click it
-3. Set:
-   - **Base:** `main`
-   - **Title:** `feat: add greet function (<your-name>)`
-   - **Body:** Fill in the PR template fields
-4. Click **Create pull request**
+3. Set **Base:** `main` and **Title:** `feat: add greet function (<your-name>)`
+4. The body is pre-filled by the PR template — fill in each section (see guide below)
+5. Click **Create pull request**
+
+### How to fill the PR template
+
+The template exists so reviewers don't have to ask "what does this do?" and "how was it tested?" — answer those questions upfront.
+
+**❌ What most people do (unhelpful):**
+
+```
+## Summary
+added greet function
+
+## Changes
+- stuff
+
+## Testing
+it works
+```
+
+**✅ What a good PR looks like:**
+
+```markdown
+## Summary
+
+Adds a `greet()` function that returns a personalised welcome message.
+This is the foundation for the onboarding banner we'll add in the next sprint.
+
+## Changes
+
+- `src/app.py` — new `greet(name)` function with input validation
+- `src/test_app.py` — two tests covering the happy path and empty-name edge case
+
+## Type of Change
+
+- [x] New feature
+
+## Testing
+
+Ran the full test suite locally — all 10 tests pass:
+
+```bash
+cd src && pytest -v
+# test_greet PASSED
+# test_greet_empty_name PASSED
+```
+
+## Checklist
+
+- [x] My code follows the project's style guidelines
+- [x] I have added or updated tests where applicable
+- [x] CI checks are passing
+- [x] I have self-reviewed this PR before requesting review
+- [ ] Related issues are linked below
+
+## Related Issues
+
+Closes #12
+```
+
+**The three rules of a good PR body:**
+1. **Summary = why, not what** — the diff already shows what changed; explain the reason
+2. **Testing = be specific** — name the test, show the command, mention the edge case you covered
+3. **Checklist = be honest** — uncheck boxes that don't apply rather than ticking everything blindly
 
 ---
 
