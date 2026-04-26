@@ -169,9 +169,16 @@ git push origin main
 Or via `gh`:
 
 ```bash
-gh repo sync                          # sync your fork's default branch with upstream
-gh repo sync --branch main            # specify branch explicitly
+# Pull latest upstream changes into your local fork
+git fetch upstream
+git merge upstream/main
+git push origin main
+
+# Or — let gh do it (only works when there are no diverging changes)
+gh repo sync --branch main
 ```
+
+> **Note:** `gh repo sync` only works cleanly when your fork has no extra local commits that diverge from upstream. If you get *"can't sync because there are diverging changes"*, use `git fetch upstream && git merge upstream/main` instead — that gives you full control over how conflicts are resolved.
 
 ---
 

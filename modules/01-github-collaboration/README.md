@@ -43,7 +43,10 @@ gh repo fork securithings/github-workshop --clone
 
 **Keep your fork in sync:**
 ```bash
-gh repo sync          # syncs your fork's default branch with upstream
+git fetch upstream && git merge upstream/main && git push origin main
+
+# Or, when there are no diverging commits:
+gh repo sync --branch main
 ```
 
 ---
