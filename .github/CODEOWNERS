@@ -1,0 +1,17 @@
+# CODEOWNERS — GitHub enforces review requirements based on these rules.
+# Format: <pattern>  <owner(s)>
+# Owners can be GitHub usernames, teams (@org/team), or email addresses.
+
+# Default owner for everything
+*                   @securithings/platform-team
+
+# CI/CD configuration — requires platform team approval
+.github/workflows/  @securithings/platform-team
+.github/            @securithings/platform-team
+
+# Source code — requires at least one dev-leads approval
+src/                @securithings/dev-leads
+
+# Documentation — any team member can approve
+docs/               @securithings/developers
+*.md                @securithings/developers

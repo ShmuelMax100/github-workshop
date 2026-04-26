@@ -1,0 +1,111 @@
+name: "Example — Matrix Build Patterns"
+
+# Demonstrates advanced matrix strategy patterns.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # ── Basic matrix ────────────────────────────────────────────────────────────
+  basic-matrix:
+    name: Basic / ${{ matrix.os }} / py${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python --version
+
+  # ── Matrix with exclude & include ────────────────────────────────────────────
+  advanced-matrix:
+    name: Advanced / ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Define each combination explicitly for full control
+          - name: "Ubuntu / Python 3.11 (with coverage)"
+            os: ubuntu-latest
+            python-version: "3.11"
+            coverage: true
+            upload-results: true
+
+          - name: "Ubuntu / Python 3.12"
+            os: ubuntu-latest
+            python-version: "3.12"
+            coverage: false
+            upload-results: true
+
+          - name: "Windows / Python 3.11"
+            os: windows-latest
+            python-version: "3.11"
+            coverage: false
+            upload-results: false
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest src/ -v --junitxml=results.xml
+
+      - name: Run with coverage
+        if: matrix.coverage == true
+        run: |
+          pip install pytest-cov
+          pytest src/ --cov=src --cov-report=xml
+
+      - name: Upload results
+        if: matrix.upload-results == true
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
+        with:
+          name: results-${{ matrix.name }}
+          path: "*.xml"
+
+  # ── Dynamic matrix (generated at runtime) ────────────────────────────────────
+  # Useful when the list of services/components is dynamic.
+  generate-matrix:
+    name: Generate service list
+    runs-on: ubuntu-latest
+    outputs:
+      services: ${{ steps.list.outputs.services }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - id: list
+        run: |
+          # In reality, this might scan directories or query an API
+          echo 'services=["auth","api","worker"]' >> $GITHUB_OUTPUT
+
+  test-services:
+    name: Test / ${{ matrix.service }}
+    needs: generate-matrix
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        service: ${{ fromJSON(needs.generate-matrix.outputs.services) }}
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Test service
+        run: echo "Testing service: ${{ matrix.service }}"
