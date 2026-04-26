@@ -9,11 +9,6 @@ A side-by-side reference for teams transitioning from GitLab to GitHub.
 | Concept | GitLab | GitHub |
 |---------|--------|--------|
 | Code review request | Merge Request (MR) | Pull Request (PR) |
-| CI/CD definition file | `.gitlab-ci.yml` | `.github/workflows/*.yml` |
-| CI/CD system | GitLab CI | GitHub Actions |
-| CI executor | Runner | Runner |
-| Reusable CI | `include:` / templates | Reusable workflows / Composite actions |
-| CI job cache | `cache:` | `actions/cache` |
 | Artifacts | `artifacts:` | `actions/upload-artifact` |
 | Environment variables | CI/CD Variables | Secrets / Variables / Env |
 | Protected environments | Protected environments | Environments + protection rules |
