@@ -37,14 +37,14 @@ gh auth status && git --version && gh --version
 | Topic | Guide |
 |-------|-------|
 | Jenkins → GitHub Actions comparison | [jenkins-github-actions-comparison.md](./modules/02-github-actions/jenkins-github-actions-comparison.md) |
-| Core concepts, triggers, jobs, steps | [README.md](./modules/02-github-actions/README.md) |
-| Secrets, variables & environments | [README.md § Secrets](./modules/02-github-actions/README.md#3-secrets-variables--environments) |
-| Job orchestration: needs, parallel, conditional | [README.md § Orchestration](./modules/02-github-actions/README.md#4-job-orchestration) |
-| Reusable workflows & composite actions | [examples/reusable-workflow.yml](./modules/02-github-actions/examples/reusable-workflow.yml) |
+| Core concepts: triggers, jobs, steps, runners | [core-concepts.md](./modules/02-github-actions/core-concepts.md) |
+| Secrets, variables & environments | [secrets-variables-environments.md](./modules/02-github-actions/secrets-variables-environments.md) |
+| Job orchestration: needs, parallel, conditional, data passing | [job-orchestration.md](./modules/02-github-actions/job-orchestration.md) |
+| Reusable workflows & composite actions | [reusable-workflows.md](./modules/02-github-actions/reusable-workflows.md) |
 | Matrix builds & caching | [examples/matrix-build.yml](./modules/02-github-actions/examples/matrix-build.yml) |
 | Security best practices & SHA pinning | [security-best-practices.md](./modules/02-github-actions/security-best-practices.md) |
 | Runners: hosted vs self-hosted | [runners-guide.md](./modules/02-github-actions/runners-guide.md) |
-| Manual triggers (`workflow_dispatch`) | [../../.github/workflows/04-manual-trigger.yml](./.github/workflows/04-manual-trigger.yml) |
+| Manual triggers (`workflow_dispatch`) | [manual-triggers.md](./modules/02-github-actions/manual-triggers.md) |
 | **Hands-on exercise** | [exercises/exercise.md](./modules/02-github-actions/exercises/exercise.md) |
 
 ---
@@ -53,10 +53,9 @@ gh auth status && git --version && gh --version
 
 | Topic | Guide |
 |-------|-------|
-| Monitoring runs, logs & re-running jobs | [README.md](./modules/03-operations-debugging/README.md) |
-| Artifacts: upload, download, share | [README.md § Artifacts](./modules/03-operations-debugging/README.md#3-artifacts) |
-| Debugging: `ACTIONS_STEP_DEBUG`, annotations | [debugging-guide.md](./modules/03-operations-debugging/debugging-guide.md) |
-| `gh run` CLI reference | [README.md § gh run](./modules/03-operations-debugging/README.md#reference-gh-run-cheat-sheet) |
+| Monitoring runs, logs & re-running jobs | [monitoring-and-reruns.md](./modules/03-operations-debugging/monitoring-and-reruns.md) |
+| Artifacts: upload, download, share | [artifacts.md](./modules/03-operations-debugging/artifacts.md) |
+| Debugging: step debug, annotations, summaries | [debugging-guide.md](./modules/03-operations-debugging/debugging-guide.md) |
 | **Hands-on exercise** | [exercises/exercise.md](./modules/03-operations-debugging/exercises/exercise.md) |
 
 ---
