@@ -8,6 +8,8 @@
 
 By the end of this module you will be able to:
 
+- Authenticate with GitHub CLI and set up your local environment
+- Clone a repository and fork it for isolated development
 - Map GitLab and Jenkins concepts to their GitHub equivalents
 - Manage the full Pull Request lifecycle (create → review → approve → merge)
 - Work efficiently with GitHub CLI (`gh`) for daily tasks
@@ -18,7 +20,35 @@ By the end of this module you will be able to:
 
 ## Concepts
 
-### 1. GitLab → GitHub Terminology Mapping
+### 1. Login, Clone & Fork
+
+See the full guide: [gh-login-clone-fork.md](./gh-login-clone-fork.md)
+
+**Login:**
+```bash
+gh auth login        # interactive — opens browser for OAuth
+gh auth status       # verify you're authenticated
+```
+
+**Clone:**
+```bash
+gh repo clone securithings/github-workshop
+```
+
+**Fork + clone in one step:**
+```bash
+gh repo fork securithings/github-workshop --clone
+# gh automatically adds 'upstream' remote pointing to the original repo
+```
+
+**Keep your fork in sync:**
+```bash
+gh repo sync          # syncs your fork's default branch with upstream
+```
+
+---
+
+### 2. GitLab → GitHub Terminology Mapping
 
 See the full mapping reference: [gitlab-github-mapping.md](./gitlab-github-mapping.md)
 
