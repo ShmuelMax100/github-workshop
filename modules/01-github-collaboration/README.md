@@ -70,6 +70,8 @@ See the full mapping reference: [gitlab-github-mapping.md](./gitlab-github-mappi
 
 ### 2. Pull Request Lifecycle
 
+→ Full guide: [pr-lifecycle.md](./pr-lifecycle.md)
+
 ```
 feature branch
      │
@@ -104,6 +106,8 @@ Branch deleted (automatically if configured)
 
 ### 3. Draft PRs & PR Templates
 
+→ Full guide: [draft-prs-and-templates.md](./draft-prs-and-templates.md)
+
 **Draft PRs** signal that work is in progress. Reviewers won't be notified until you mark it ready.
 
 ```bash
@@ -121,6 +125,8 @@ gh pr ready
 ---
 
 ### 4. GitHub CLI (`gh`) for Daily Workflows
+
+→ Full guide: [gh-cli-daily-workflows.md](./gh-cli-daily-workflows.md)
 
 ```bash
 # Authentication
@@ -168,6 +174,8 @@ Branch protection rules on `main` enforce your team's standards automatically.
 
 ### 6. Repository Lifecycle & Metadata
 
+→ Full guide: [repository-lifecycle.md](./repository-lifecycle.md)
+
 - **CODEOWNERS** — auto-assign reviewers based on file paths → [../../.github/CODEOWNERS](../../.github/CODEOWNERS)
 - **Merge controls** — Squash, Rebase, or Merge commit (configure in repo settings)
 - **Auto-delete head branches** — keep branches tidy after merge
@@ -176,6 +184,8 @@ Branch protection rules on `main` enforce your team's standards automatically.
 ---
 
 ### 7. Quick UI Flows
+
+→ Full guide: [quick-ui-flows.md](./quick-ui-flows.md)
 
 | Task | How |
 |------|-----|
