@@ -18,25 +18,40 @@ A Draft PR signals that work is in progress and **not yet ready for a formal rev
 
 ### Creating a Draft PR
 
+**Via UI:**
+
+1. Push your branch and go to the repository on GitHub
+2. Click the **"Compare & pull request"** banner — or go to **Pull requests → New pull request**
+3. Fill in the title and body as usual
+4. Click the **dropdown arrow** on the right side of the green "Create pull request" button
+5. Select **"Create draft pull request"**
+6. Click **"Draft pull request"** to confirm
+
+> The PR will show a grey **Draft** badge and a "This pull request is still a work in progress" notice. The Merge button is disabled until you mark it ready.
+
+**Via CLI:**
+
 ```bash
-# Via CLI
 gh pr create --draft \
   --title "WIP: refactor auth service" \
   --body "Sharing for early feedback on the interface design."
-
-# Via UI
-# Click the dropdown arrow next to "Create pull request"
-# → select "Create draft pull request"
 ```
+
+---
 
 ### Converting to Ready for Review
 
-```bash
-# Via CLI
-gh pr ready
+**Via UI:**
 
-# Via UI
-# Open the PR → click "Ready for review" button at the bottom
+1. Open the Draft PR
+2. Scroll to the bottom of the **Conversation** tab
+3. Click **"Ready for review"**
+4. Reviewers assigned to the PR will be notified at this point
+
+**Via CLI:**
+
+```bash
+gh pr ready
 ```
 
 ### Draft PR tips
