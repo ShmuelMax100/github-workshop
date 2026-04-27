@@ -6,7 +6,13 @@ A practical reference for translating Jenkinsfile declarative pipelines into Git
 
 ## Basic Pipeline Structure
 
-**Jenkinsfile (Declarative)**
+<table>
+<tr>
+<th>Jenkinsfile (Declarative)</th>
+<th>GitHub Actions</th>
+</tr>
+<tr>
+<td>
 
 ```groovy
 pipeline {
@@ -45,7 +51,9 @@ pipeline {
                 branch 'main'
             }
             steps {
-                withCredentials([string(credentialsId: 'DEPLOY_TOKEN', variable: 'TOKEN')]) {
+                withCredentials([string(
+                  credentialsId: 'DEPLOY_TOKEN',
+                  variable: 'TOKEN')]) {
                     sh './scripts/deploy.sh'
                 }
             }
@@ -54,13 +62,15 @@ pipeline {
 
     post {
         failure {
-            mail to: 'team@securithings.com', subject: 'Build failed'
+            mail to: 'team@securithings.com',
+                 subject: 'Build failed'
         }
     }
 }
 ```
 
-**GitHub Actions equivalent**
+</td>
+<td>
 
 ```yaml
 name: CI/CD Pipeline
@@ -76,7 +86,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest         # equivalent to agent { label 'linux' }
+    runs-on: ubuntu-latest   # agent { label 'linux' }
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
       - run: pip install -r requirements.txt
@@ -87,23 +97,27 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
       - run: pytest src/ --junitxml=report.xml
-      - uses: actions/upload-artifact@v4           # replaces junit plugin
-        if: always()                               # replaces post { always {} }
+      - uses: actions/upload-artifact@v4    # replaces junit plugin
+        if: always()                        # post { always {} }
         with:
           name: test-results
           path: report.xml
 
   deploy:
     needs: test
-    if: github.ref == 'refs/heads/main'            # replaces when { branch 'main' }
+    if: github.ref == 'refs/heads/main'     # when { branch 'main' }
     runs-on: ubuntu-latest
-    environment: production                        # approval gate (replaces manual gates)
+    environment: production                 # approval gate
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
       - run: ./scripts/deploy.sh
         env:
-          TOKEN: ${{ secrets.DEPLOY_TOKEN }}       # replaces withCredentials()
+          TOKEN: ${{ secrets.DEPLOY_TOKEN }} # withCredentials()
 ```
+
+</td>
+</tr>
+</table>
 
 ---
 
@@ -128,17 +142,30 @@ jobs:
 
 ### Parallel Execution
 
-**Jenkinsfile:**
+<table>
+<tr>
+<th>Jenkinsfile</th>
+<th>GitHub Actions</th>
+</tr>
+<tr>
+<td>
+
 ```groovy
 stage('Parallel Tests') {
     parallel {
-        stage('Unit') { steps { sh 'pytest tests/unit/' } }
-        stage('Integration') { steps { sh 'pytest tests/integration/' } }
+        stage('Unit') {
+            steps { sh 'pytest tests/unit/' }
+        }
+        stage('Integration') {
+            steps { sh 'pytest tests/integration/' }
+        }
     }
 }
 ```
 
-**GitHub Actions:**
+</td>
+<td>
+
 ```yaml
 jobs:
   unit-test:
@@ -153,20 +180,39 @@ jobs:
       - uses: actions/checkout@v4
       - run: pytest tests/integration/
 
-  # Both run in parallel (no 'needs:' between them)
+  # Both run in parallel — no 'needs:' between them
 ```
+
+</td>
+</tr>
+</table>
 
 ### Build Parameters → `workflow_dispatch` Inputs
 
-**Jenkinsfile:**
+<table>
+<tr>
+<th>Jenkinsfile</th>
+<th>GitHub Actions</th>
+</tr>
+<tr>
+<td>
+
 ```groovy
 parameters {
-    string(name: 'DEPLOY_ENV', defaultValue: 'staging')
-    booleanParam(name: 'DRY_RUN', defaultValue: false)
+    string(
+      name: 'DEPLOY_ENV',
+      defaultValue: 'staging'
+    )
+    booleanParam(
+      name: 'DRY_RUN',
+      defaultValue: false
+    )
 }
 ```
 
-**GitHub Actions:**
+</td>
+<td>
+
 ```yaml
 on:
   workflow_dispatch:
@@ -181,6 +227,10 @@ on:
         type: boolean
         default: false
 ```
+
+</td>
+</tr>
+</table>
 
 ### Post Actions
 
@@ -202,15 +252,33 @@ on:
 
 ## Shared Libraries → Reusable Workflows
 
-**Jenkins shared library:**
+<table>
+<tr>
+<th>Jenkins shared library</th>
+<th>GitHub Actions reusable workflow</th>
+</tr>
+<tr>
+<td>
+
 ```groovy
 // vars/deployApp.groovy
 def call(String env) {
     sh "./deploy.sh ${env}"
 }
+
+// Caller (Jenkinsfile)
+@Library('my-shared-lib') _
+
+stage('Deploy') {
+    steps {
+        deployApp('staging')
+    }
+}
 ```
 
-**GitHub Actions reusable workflow:**
+</td>
+<td>
+
 ```yaml
 # .github/workflows/deploy.yml
 on:
@@ -219,16 +287,14 @@ on:
       environment:
         type: string
         required: true
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - run: ./deploy.sh ${{ inputs.environment }}
-```
 
-**Caller:**
-```yaml
+---
+# Caller workflow
 jobs:
   call-deploy:
     uses: ./.github/workflows/deploy.yml
@@ -236,16 +302,20 @@ jobs:
       environment: staging
 ```
 
+</td>
+</tr>
+</table>
+
 ---
 
 ## Key Mental Model Shifts
 
 | Jenkins thinking | GitHub Actions thinking |
 |------------------|------------------------|
-| Stages run sequentially by default | Jobs run in parallel by default — use `needs:` to sequence |
-| One agent per pipeline | Each job gets its own fresh VM |
+| Stages run sequentially by default | Jobs run **in parallel** by default — use `needs:` to sequence |
+| One agent per pipeline | Each job gets its **own fresh VM** |
 | Plugins for everything | Actions from Marketplace (or write your own) |
 | Groovy DSL | YAML + shell |
-| Credentials plugin | Repository/Org secrets |
+| Credentials plugin | Repository / Org secrets |
 | Manual approval via Input step | Environment protection rules (no plugin needed) |
 | Build artifacts stored on Jenkins master | Artifacts uploaded to GitHub (90-day retention) |
