@@ -12,7 +12,7 @@ A practical reference for translating Jenkinsfile declarative pipelines into Git
 <th>GitHub Actions</th>
 </tr>
 <tr>
-<td>
+<td valign="top">
 
 ```groovy
 pipeline {
@@ -70,7 +70,7 @@ pipeline {
 ```
 
 </td>
-<td>
+<td valign="top">
 
 ```yaml
 name: CI/CD Pipeline
@@ -119,6 +119,7 @@ jobs:
 </tr>
 </table>
 
+
 ---
 
 ## Common Patterns
@@ -148,7 +149,7 @@ jobs:
 <th>GitHub Actions</th>
 </tr>
 <tr>
-<td>
+<td valign="top">
 
 ```groovy
 stage('Parallel Tests') {
@@ -164,7 +165,7 @@ stage('Parallel Tests') {
 ```
 
 </td>
-<td>
+<td valign="top">
 
 ```yaml
 jobs:
@@ -195,7 +196,7 @@ jobs:
 <th>GitHub Actions</th>
 </tr>
 <tr>
-<td>
+<td valign="top">
 
 ```groovy
 parameters {
@@ -211,7 +212,7 @@ parameters {
 ```
 
 </td>
-<td>
+<td valign="top">
 
 ```yaml
 on:
@@ -258,7 +259,7 @@ on:
 <th>GitHub Actions reusable workflow</th>
 </tr>
 <tr>
-<td>
+<td valign="top">
 
 ```groovy
 // vars/deployApp.groovy
@@ -277,7 +278,7 @@ stage('Deploy') {
 ```
 
 </td>
-<td>
+<td valign="top">
 
 ```yaml
 # .github/workflows/deploy.yml
