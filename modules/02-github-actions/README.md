@@ -8,7 +8,8 @@
 | Core concepts: triggers, jobs, steps, runners | [core-concepts.md](./core-concepts.md) |
 | Secrets, variables & environments | [secrets-variables-environments.md](./secrets-variables-environments.md) |
 | Environments: approvals & protection rules | [environments-and-approvals.md](./environments-and-approvals.md) |
-| Job orchestration: needs, parallel, conditional, data passing | [job-orchestration.md](./job-orchestration.md) |
+| Job orchestration: needs, parallel, conditional execution | [job-orchestration.md](./job-orchestration.md) |
+| Passing data between steps and jobs | [passing-data.md](./passing-data.md) |
 | Reusable workflows & composite actions | [reusable-workflows.md](./reusable-workflows.md) |
 | Performance & scale: caching & matrix builds | [caching-and-matrix.md](./caching-and-matrix.md) |
 | Security best practices & SHA pinning | [security-best-practices.md](./security-best-practices.md) |

@@ -35,7 +35,8 @@
 | Core concepts: triggers, jobs, steps, runners | [core-concepts.md](./modules/02-github-actions/core-concepts.md) |
 | Secrets, variables & environments | [secrets-variables-environments.md](./modules/02-github-actions/secrets-variables-environments.md) |
 | Environments: approvals & protection rules | [environments-and-approvals.md](./modules/02-github-actions/environments-and-approvals.md) |
-| Job orchestration: needs, parallel, conditional, data passing | [job-orchestration.md](./modules/02-github-actions/job-orchestration.md) |
+| Job orchestration: needs, parallel, conditional execution | [job-orchestration.md](./modules/02-github-actions/job-orchestration.md) |
+| Passing data between steps and jobs | [passing-data.md](./modules/02-github-actions/passing-data.md) |
 | Reusable workflows & composite actions | [reusable-workflows.md](./modules/02-github-actions/reusable-workflows.md) |
 | Performance & scale: caching & matrix builds | [caching-and-matrix.md](./modules/02-github-actions/caching-and-matrix.md) |
 | Security best practices & SHA pinning | [security-best-practices.md](./modules/02-github-actions/security-best-practices.md) |
