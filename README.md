@@ -31,7 +31,7 @@
 
 | Topic | Guide |
 |-------|-------|
-| Jenkins → GitHub Actions comparison | [jenkins-github-actions-comparison.md](./modules/02-github-actions/jenkins-github-actions-comparison.md) |
+| GitLab CI & Jenkins → GitHub Actions comparison | [jenkins-github-actions-comparison.md](./modules/02-github-actions/jenkins-github-actions-comparison.md) |
 | Core concepts: triggers, jobs, steps, runners | [core-concepts.md](./modules/02-github-actions/core-concepts.md) |
 | Secrets, variables & environments | [secrets-variables-environments.md](./modules/02-github-actions/secrets-variables-environments.md) |
 | Job orchestration: needs, parallel, conditional, data passing | [job-orchestration.md](./modules/02-github-actions/job-orchestration.md) |
