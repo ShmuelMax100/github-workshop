@@ -91,28 +91,6 @@ jobs:
         with:
           name: dist
           path: dist/
-
-  # ── Job 4: Deploy Staging ──────────────────────────────────────────
-  deploy-staging:
-    name: Deploy → Staging
-    needs: build
-    # TODO ⑦: Only run on pushes to main (not PRs)
-    runs-on: ubuntu-latest
-    environment: staging          # Triggers approval gate (if configured)
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download dist
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/
-
-      - name: Deploy
-        run: echo "Deploying to staging..."
-        env:
-          # TODO ⑧: Reference the STAGING_DEPLOY_TOKEN secret as DEPLOY_TOKEN
 ```
 
 ### 💡 Stuck on a CI TODO? Hints with deep links
