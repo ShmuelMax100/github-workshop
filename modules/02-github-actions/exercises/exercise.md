@@ -219,6 +219,6 @@ gh run watch
 
 ## Solution Reference
 
-→ [../../.github/workflows/01-basic-ci.yml](../../.github/workflows/01-basic-ci.yml)  
-→ [../../.github/workflows/02-matrix-build.yml](../../.github/workflows/02-matrix-build.yml)  
-→ [../../.github/workflows/03-reusable-workflow.yml](../../.github/workflows/03-reusable-workflow.yml)
+→ [../../../.github/workflows/01-basic-ci.yml](../../../.github/workflows/01-basic-ci.yml)  
+→ [../../../.github/workflows/02-matrix-build.yml](../../../.github/workflows/02-matrix-build.yml)  
+→ [../../../.github/workflows/03-reusable-workflow.yml](../../../.github/workflows/03-reusable-workflow.yml)
