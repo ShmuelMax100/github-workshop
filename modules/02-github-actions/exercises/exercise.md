@@ -1,23 +1,9 @@
 # Exercise 2 — Build a CI Pipeline and a CD Pipeline
 
-> **TL;DR** — In ~30 minutes you'll build **two separate workflow files**: `ci.yml` (lint → test matrix → build, runs on every push/PR) and `cd.yml` (deploy, runs on `workflow_dispatch` and push to main, gated by an environment). Splitting the two is the GitHub-native pattern — Jenkins habits push everything into one giant pipeline; here, verification and release live in different files.
+> **TL;DR** — In ~30 minutes you'll build `ci.yml` (lint → test matrix → build, runs on every push/PR) and `cd.yml` (deploy, runs on `workflow_dispatch` and push to main, gated by an environment).
 
 **Duration:** ~30 minutes
 **Goal:** Two workflows, one pull request, branch protection enforcing every required check before merge.
-
----
-
-## Why two files?
-
-| Concern | CI (`ci.yml`) | CD (`cd.yml`) |
-|---|---|---|
-| **What it does** | Verify the code is green | Release a build to an environment |
-| **When it runs** | Every push and PR | Push to `main` (auto-staging) + manual dispatch |
-| **Needs secrets?** | No | Yes — env-scoped `DEPLOY_TOKEN` |
-| **Needs `environment:`?** | No | Yes — that's where approval gates live |
-| **Permissions** | `contents: read` | `contents: read` (+ `id-token: write` if using OIDC) |
-
-Mixing the two in one file is the Jenkinsfile reflex. Resist it.
 
 ---
 
@@ -32,7 +18,7 @@ mkdir -p .github/workflows
 
 ## Part A — Build `ci.yml` (15 min)
 
-Create `.github/workflows/ci.yml`. This file is **verification only** — no deploys, no secrets, no environments.
+Create `.github/workflows/ci.yml` — lint, test, and build.
 
 ```yaml
 name: CI
@@ -124,7 +110,7 @@ Read the linked section first. Open the solution (`solutions/02-ci-workflow/`) o
 
 ## Part B — Build `cd.yml` (10 min)
 
-Create `.github/workflows/cd.yml`. This file is **release only** — it picks an environment, downloads the dist, and deploys.
+Create `.github/workflows/cd.yml` — pick an environment and deploy.
 
 > **Why a fallback for `environment:`?** On `workflow_dispatch`, `inputs.environment` is set by the user. On `push`, inputs don't exist — so we default to `staging` with `inputs.environment || 'staging'`. Without the fallback, push-to-main deploys would have no environment scope, no approval gate, and no env-scoped secrets.
 
