@@ -29,9 +29,7 @@ on:
   pull_request:
     branches: [main]
 
-# TODO: Set default permissions to read-only
-permissions:
-  contents: read
+# TODO: Set default permissions to read-only at workflow level
 
 jobs:
   # ── Job 1: Lint ────────────────────────────────────────────────────
@@ -114,8 +112,7 @@ jobs:
       - name: Deploy
         run: echo "Deploying to staging..."
         env:
-          # TODO: Reference the STAGING_DEPLOY_TOKEN secret
-          DEPLOY_TOKEN: ${{ secrets.STAGING_DEPLOY_TOKEN }}
+          # TODO: Reference the STAGING_DEPLOY_TOKEN secret as DEPLOY_TOKEN
 ```
 
 ---
