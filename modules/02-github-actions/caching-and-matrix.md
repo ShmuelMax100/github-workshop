@@ -4,19 +4,61 @@ Two built-in GitHub Actions features that turn slow, repetitive pipelines into f
 
 ---
 
-## actions/cache — Optimize Build Times
+## Caching — Optimize Build Times
 
-Every job starts on a **fresh VM**. Without caching, you reinstall dependencies on every run. `actions/cache` saves a directory to GitHub's cache storage and restores it on the next run when the key matches.
+Every job starts on a **fresh VM**. Without caching, you reinstall dependencies on every run.
 
-### How it works
+### Default approach: built-in cache via `setup-*` actions
+
+For most projects, the simplest and recommended way to cache dependencies is to enable the `cache:` input on the language's `setup-*` action. GitHub maintains the path and key for you.
+
+```yaml
+- uses: actions/setup-node@v4
+  with:
+    node-version: '20'
+    cache: 'yarn'                    # 'npm' | 'yarn' | 'pnpm'
+    cache-dependency-path: yarn.lock # optional, auto-detected
+
+- uses: actions/setup-python@v5
+  with:
+    python-version: '3.12'
+    cache: 'pip'                     # also: 'pipenv', 'poetry'
+
+- uses: actions/setup-java@v4
+  with:
+    distribution: 'temurin'
+    java-version: '21'
+    cache: 'gradle'                  # also: 'maven', 'sbt'
+```
+
+| `setup-*` action | `cache:` values |
+|------------------|-----------------|
+| `setup-node` | `npm`, `yarn`, `pnpm` |
+| `setup-python` | `pip`, `pipenv`, `poetry` |
+| `setup-java` | `maven`, `gradle`, `sbt` |
+| `setup-go` | `true` (auto) |
+| `setup-dotnet` | `true` (auto, since v4) |
+| `setup-ruby` | (use built-in `bundler-cache: true`) |
+
+This covers the **80% case** — drop down to `actions/cache@v4` only when you need to cache something the `setup-*` action doesn't handle.
+
+### When to use `actions/cache@v4` directly
+
+Use it when you need:
+
+- **Custom paths** — Docker buildx layers, ccache, Bazel, `~/.cargo`, build outputs
+- **Unsupported languages** — Rust, C/C++, Swift, etc.
+- **Multiple paths or a custom key strategy** (e.g. partial-match fallback chains)
 
 ```yaml
 - uses: actions/cache@v4
   with:
-    path: ~/.cache/pip          # what to cache
-    key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+    path: |
+      ~/.cargo/registry
+      target/
+    key: ${{ runner.os }}-cargo-${{ hashFiles('Cargo.lock') }}
     restore-keys: |
-      ${{ runner.os }}-pip-    # fallback if exact key not found
+      ${{ runner.os }}-cargo-
 ```
 
 - **`key`** — exact match to restore. If it matches, cache is restored and the step reports a hit.
@@ -25,17 +67,16 @@ Every job starts on a **fresh VM**. Without caching, you reinstall dependencies 
 
 The cache is saved automatically at job end if the key was a miss.
 
-### Common cache patterns
+### Common manual-cache patterns (when `setup-*` isn't an option)
 
 | Ecosystem | path | key |
 |-----------|------|-----|
-| Python (pip) | `~/.cache/pip` | `${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}` |
-| Node (npm) | `~/.npm` | `${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}` |
-| Node (yarn) | `.yarn/cache` | `${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}` |
-| Gradle | `~/.gradle/caches` | `${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}` |
-| Docker layers | `/tmp/.buildx-cache` | `${{ runner.os }}-buildx-${{ github.sha }}` |
+| Rust (cargo) | `~/.cargo/registry`, `target/` | `${{ runner.os }}-cargo-${{ hashFiles('Cargo.lock') }}` |
+| Docker buildx | `/tmp/.buildx-cache` | `${{ runner.os }}-buildx-${{ github.sha }}` |
+| ccache | `~/.ccache` | `${{ runner.os }}-ccache-${{ github.sha }}` |
+| Bazel | `~/.cache/bazel` | `${{ runner.os }}-bazel-${{ hashFiles('WORKSPACE', '**/BUILD*') }}` |
 
-### Full Python example
+### Full Python example (using `setup-python` cache)
 
 ```yaml
 jobs:
@@ -47,15 +88,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: "pip"                     # built-in pip cache, keyed on requirements files
 
-      - uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      - run: pip install -r requirements.txt   # skipped on cache hit
+      - run: pip install -r requirements.txt   # fast on cache hit
       - run: pytest src/
 ```
 

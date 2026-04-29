@@ -1,0 +1,24 @@
+{
+  "name": "github-workshop",
+  "version": "1.0.0",
+  "description": "> **Duration:** 3.5 hours &nbsp;|&nbsp; **Format:** Hands-on &nbsp;|&nbsp; **Audience:** Developers transitioning from GitLab & Jenkins",
+  "main": "build-pptx.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShmuelMax100/github-workshop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ShmuelMax100/github-workshop/issues"
+  },
+  "homepage": "https://github.com/ShmuelMax100/github-workshop#readme",
+  "dependencies": {
+    "pptxgenjs": "^4.0.1"
+  }
+}
