@@ -10,13 +10,11 @@
 >
 > Copy-pasting from here without the struggle defeats the workshop.
 
-> **TL;DR** — Reference solution for Exercise 2: two separate workflows. `ci.yml` runs lint → test (matrix x3) → build on every push/PR. `cd.yml` runs on push to main and `workflow_dispatch`, deploys to the chosen environment with `inputs.environment || 'staging'` fallback so the same job handles auto-staging and manual production releases.
+> **TL;DR** — Reference solution for Exercise 2. `ci.yml` runs lint → test (matrix x3) → build on every push/PR. `cd.yml` runs on push to main and `workflow_dispatch`, deploys to the chosen environment with an `inputs.environment || 'staging'` fallback so the same job handles auto-staging and manual production releases.
 
 ## What was built
 
-Two workflow files that split verification from release:
-
-- **`ci.yml`** — lint → test (3-version matrix) → build → upload `dist` artifact. No secrets, no environments. Runs on every push and PR.
+- **`ci.yml`** — lint → test (3-version matrix) → build → upload `dist` artifact. Runs on every push and PR.
 - **`cd.yml`** — single `deploy` job, gated by an environment chosen via `workflow_dispatch` input (defaults to `staging` on auto-runs). Uses env-scoped `DEPLOY_TOKEN`.
 
 ## Files to copy
@@ -54,7 +52,3 @@ cp solutions/02-ci-workflow/.github/workflows/cd.yml .github/workflows/cd.yml
 - After merge to `main`: `cd.yml` runs automatically and deploys to `staging`
 - Manual production deploy: `gh workflow run cd.yml -f environment=production` — triggers the `production` environment's approval gate (if configured)
 - The `DEPLOY_TOKEN` secret resolves to a different value depending on which environment runs — the same YAML line works for both
-
-## Why two files?
-
-This split is intentional and is the GitHub-native pattern. CI verifies; CD releases. Mixing them in one file is the Jenkinsfile reflex — readable in Jenkins because it's all you've got, but in GitHub Actions you get cleaner triggers, tighter permission scopes, and clearer ownership when each concern lives in its own file.
