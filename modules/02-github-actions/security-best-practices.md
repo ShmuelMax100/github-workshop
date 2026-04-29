@@ -1,5 +1,7 @@
 # GitHub Actions — Security Best Practices
 
+> **TL;DR** — Pin third-party actions to a full SHA (tags can be moved), declare minimal `permissions:` per job, never interpolate untrusted input or secrets directly into `run:`, and prefer OIDC over long-lived cloud credentials. The checklist at the bottom is the one to copy into your repo template.
+
 ---
 
 ## 1. SHA Pin Third-Party Actions

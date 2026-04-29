@@ -1,6 +1,8 @@
 # Start Here — Workshop Setup
 
-Complete these steps **before the session starts**. It takes about 10 minutes.
+> **TL;DR** — Install `gh`, fork the repo, create your `workshop/<name>` branch, run the test suite, and turn on branch protection on your fork. Ten minutes of setup now saves the whole room time once the session starts.
+
+Completethese steps **before the session starts**. It takes about 10 minutes.
 
 ---
 

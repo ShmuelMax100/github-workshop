@@ -1,6 +1,8 @@
 # Environments: Approvals & Protection Rules
 
-GitHub Environments are named deployment targets (e.g. `staging`, `production`) that let you add approval gates, scoped secrets, and wait timers — without any plugins.
+> **TL;DR** — Add `environment: production` to a job and GitHub gives you free approval gates, scoped secrets, wait timers, and branch restrictions — no Jenkins-style `input` step blocking an agent. Pending deploys queue without holding a runner, and every approval is logged in the Deployments tab.
+
+GitHub Environmentsare named deployment targets (e.g. `staging`, `production`) that let you add approval gates, scoped secrets, and wait timers — without any plugins.
 
 ---
 

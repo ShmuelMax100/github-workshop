@@ -1,5 +1,7 @@
 # Solution — Exercise 1: PR Workflow
 
+> **TL;DR** — Reference solution for Exercise 1: a `greet()` function with tests, plus the exact branch → commit → push → `gh pr create` → review → squash-merge sequence. Use it to unblock yourself, not to skip the exercise.
+
 ## What was added
 
 A `greet()` function in `app.py` and its matching tests in `test_app.py`.

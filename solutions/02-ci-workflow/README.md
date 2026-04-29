@@ -1,5 +1,7 @@
 # Solution — Exercise 2: CI Workflow
 
+> **TL;DR** — Reference solution for Exercise 2: a complete lint → test (matrix) → build → deploy-staging pipeline with the answer for every TODO in the exercise skeleton. Copy `ci.yml` into `.github/workflows/` to compare against your own attempt.
+
 ## What was built
 
 A complete CI pipeline with lint → test (matrix) → build → deploy-staging.

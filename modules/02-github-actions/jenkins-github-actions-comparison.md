@@ -1,6 +1,8 @@
 # GitLab CI & Jenkins → GitHub Actions: Side-by-Side Comparison
 
-A practical reference for translating GitLab CI pipelines and Jenkinsfile declarative pipelines into GitHub Actions workflows.
+> **TL;DR** — The concepts are the same, the syntax differs, and the mental model flips: jobs default to **parallel** (use `needs:` to sequence) and each gets its **own fresh VM** (no shared workspace, no Groovy shared libraries — use reusable workflows or composite actions instead).
+
+A practical referencefor translating GitLab CI pipelines and Jenkinsfile declarative pipelines into GitHub Actions workflows.
 
 ---
 

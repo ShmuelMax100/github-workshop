@@ -1,6 +1,8 @@
 # Performance & Scale: Caching and Matrix Builds
 
-Two built-in GitHub Actions features that turn slow, repetitive pipelines into fast, thorough ones — without extra infrastructure.
+> **TL;DR** — For 80% of projects, `cache: 'pip'|'npm'|'gradle'` on the language's `setup-*` action is all you need; reach for `actions/cache@v4` only for custom paths like cargo or buildx. A `strategy: matrix:` runs the same job in parallel across versions/OSes — pair with `fail-fast: false` when you want full results.
+
+Two built-inGitHub Actions features that turn slow, repetitive pipelines into fast, thorough ones — without extra infrastructure.
 
 ---
 

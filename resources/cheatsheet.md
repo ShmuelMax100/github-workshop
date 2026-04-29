@@ -1,5 +1,7 @@
 # GitHub Workshop — Quick Reference Cheat Sheet
 
+> **TL;DR** — One-page recall card for the workshop: the `gh` commands you'll use daily (PRs, runs, secrets), the YAML patterns you'll copy-paste (triggers, `needs:`, outputs, cache, matrix, `if: always()`), the security must-haves (SHA pins, minimal `permissions:`, safe env interpolation), and the GitLab→GitHub mapping table.
+
 ---
 
 ## `gh` CLI — Pull Requests

@@ -1,6 +1,8 @@
 # Module 2 — GitHub Actions Deep Dive
 
-**Duration:** 80 minutes
+> **TL;DR** — The 80-minute Actions deep-dive: 11 guides covering triggers, jobs, secrets, environments, orchestration, reusable workflows, caching/matrix, security, runners, and manual triggers — plus a hands-on exercise that builds a lint→test→build→deploy pipeline from scratch.
+
+**Duration:**80 minutes
 
 | Topic | Guide |
 |-------|-------|

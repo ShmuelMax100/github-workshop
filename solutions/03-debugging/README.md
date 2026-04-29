@@ -1,5 +1,7 @@
 # Solution — Exercise 3: Debugging
 
+> **TL;DR** — Reference solution for Exercise 3: the exact `gh run` commands to find a failure, enable `ACTIONS_STEP_DEBUG`, fix the broken test, and pull the artifact down. Mirror this sequence the next time CI fails on a real PR.
+
 ## What you did
 
 Introduced an intentional test failure, debugged it with `gh` CLI and debug logging, fixed it, and downloaded the artifact.

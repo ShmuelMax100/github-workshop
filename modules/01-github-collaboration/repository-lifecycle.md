@@ -1,6 +1,8 @@
 # Repository Lifecycle — CODEOWNERS, Merge Controls & Metadata
 
-How a repository is configured shapes every developer's daily experience. This guide covers the settings that matter most.
+> **TL;DR** — `.github/CODEOWNERS` auto-assigns reviewers (only enforced when branch protection enables "Require review from Code Owners"). Default to **squash-merge only** + auto-delete head branches for a clean linear history. Use the new-repo checklist at the bottom every time you create a repo.
+
+How a repositoryis configured shapes every developer's daily experience. This guide covers the settings that matter most.
 
 ---
 

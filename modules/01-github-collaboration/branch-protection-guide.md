@@ -1,6 +1,8 @@
 # Branch Protection Rules — Setup Guide
 
-Branch protection rules prevent accidental (or malicious) direct pushes to critical branches and enforce code review standards.
+> **TL;DR** — Branch protection makes `main` require a PR, an approval, and green status checks before merge — and blocks force-pushes and deletions. Configure it in **Settings → Branches** (or use Rulesets for org-wide policy with bypass lists and audit logs).
+
+Branch protection rulesprevent accidental (or malicious) direct pushes to critical branches and enforce code review standards.
 
 ---
 

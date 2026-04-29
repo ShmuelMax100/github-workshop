@@ -1,6 +1,8 @@
 # GitLab → GitHub Presentation
 
-Source-controlled deck for the workshop session covering terminology mapping,
+> **TL;DR** — The slide deck is generated from a single Markdown file (`gitlab-to-github-slides.md`) by `build_pptx.py`. Edit the Markdown, run `python build_pptx.py`, and out comes a 25-slide 16:9 `.pptx` with speaker notes baked in.
+
+Source-controlleddeck for the workshop session covering terminology mapping,
 PR lifecycle, `gh` CLI, branch protection, repository lifecycle, and quick
 UI flows.
 

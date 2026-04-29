@@ -1,6 +1,8 @@
 # Artifacts — Persisting & Sharing Build Outputs
 
-Artifacts let you save files from a workflow run and share them between jobs or download them afterward.
+> **TL;DR** — `actions/upload-artifact@v4` saves files for download or for a later job; pair with `if: always()` so failed runs still cough up debug logs. Use **artifacts** for human/durable outputs (test reports, dist/, logs), and **`actions/cache`** for speeding up dependency installs — they're not interchangeable.
+
+Artifacts letyou save files from a workflow run and share them between jobs or download them afterward.
 
 ---
 

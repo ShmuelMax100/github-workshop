@@ -1,5 +1,7 @@
 # Workflow Debugging Reference
 
+> **TL;DR** — Start with `gh run view --log-failed` to find the red step, then re-run with `--debug` (or set the `ACTIONS_STEP_DEBUG` secret) for verbose action I/O. Most "mystery skips" are a wrong `if:` (remember `github.ref` is `refs/heads/main`, not `main`); most "permission denied" failures are missing `permissions:` scopes.
+
 ---
 
 ## Quick Diagnosis Checklist
