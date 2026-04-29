@@ -1,9 +1,23 @@
-# Exercise 2 — Build a Complete CI Workflow
+# Exercise 2 — Build a CI Pipeline and a CD Pipeline
 
-> **TL;DR** — In ~30 minutes you'll fill in the TODOs of a `ci.yml` skeleton (matrix test, `needs:`, `if: github.ref == 'refs/heads/main'`, artifact upload, environment secret), add a `workflow_dispatch` trigger, and watch branch protection block your PR until every required check is green.
+> **TL;DR** — In ~30 minutes you'll build **two separate workflow files**: `ci.yml` (lint → test matrix → build, runs on every push/PR) and `cd.yml` (deploy, runs on `workflow_dispatch` and push to main, gated by an environment). Splitting the two is the GitHub-native pattern — Jenkins habits push everything into one giant pipeline; here, verification and release live in different files.
 
-**Duration:**~30 minutes  
-**Goal:** Build a CI workflow from scratch, push code, and validate that PR checks block merges until all gates pass.
+**Duration:** ~30 minutes
+**Goal:** Two workflows, one pull request, branch protection enforcing every required check before merge.
+
+---
+
+## Why two files?
+
+| Concern | CI (`ci.yml`) | CD (`cd.yml`) |
+|---|---|---|
+| **What it does** | Verify the code is green | Release a build to an environment |
+| **When it runs** | Every push and PR | Push to `main` (auto-staging) + manual dispatch |
+| **Needs secrets?** | No | Yes — env-scoped `DEPLOY_TOKEN` |
+| **Needs `environment:`?** | No | Yes — that's where approval gates live |
+| **Permissions** | `contents: read` | `contents: read` (+ `id-token: write` if using OIDC) |
+
+Mixing the two in one file is the Jenkinsfile reflex. Resist it.
 
 ---
 
@@ -11,14 +25,14 @@
 
 ```bash
 git checkout -b feature/<your-name>/ci-workflow
+mkdir -p .github/workflows
 ```
 
 ---
 
-## Part A — Create the CI Workflow (15 min)
+## Part A — Build `ci.yml` (15 min)
 
-Create the file `.github/workflows/ci.yml` with the following structure.  
-Fill in each `# TODO` section using the module concepts.
+Create `.github/workflows/ci.yml`. This file is **verification only** — no deploys, no secrets, no environments.
 
 ```yaml
 name: CI
@@ -63,7 +77,7 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
 
-      # TODO ④: Set up Python from matrix variable
+      # TODO ④: Set up Python from the matrix variable
 
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -91,31 +105,9 @@ jobs:
         with:
           name: dist
           path: dist/
-
-  # ── Job 4: Deploy Staging ──────────────────────────────────────────
-  deploy-staging:
-    name: Deploy → Staging
-    needs: build
-    # TODO ⑦: Only run on pushes to main (not PRs)
-    runs-on: ubuntu-latest
-    environment: staging          # Triggers approval gate (if configured)
-
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
-
-      - name: Download dist
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/
-
-      - name: Deploy
-        run: echo "Deploying to staging..."
-        env:
-          # TODO ⑧: Reference the STAGING_DEPLOY_TOKEN secret as DEPLOY_TOKEN
 ```
 
-### 💡 Stuck on a TODO? Hints with deep links
+### 💡 Stuck on a CI TODO? Hints with deep links
 
 Read the linked section first. Open the solution (`solutions/02-ci-workflow/`) only as a last resort.
 
@@ -127,58 +119,72 @@ Read the linked section first. Open the solution (`solutions/02-ci-workflow/`) o
 | ④ | Use the matrix value in setup-python | `${{ matrix.<key> }}` reference | [caching-and-matrix.md → "Basic matrix"](../caching-and-matrix.md?plain=1#L116) |
 | ⑤ | Upload artifact even on failure | `actions/upload-artifact` + `if: always()` | [03-operations-debugging/artifacts.md → "Upload even on failure"](../../03-operations-debugging/artifacts.md?plain=1#L24) |
 | ⑥ | Make `build` wait for `lint` AND `test` | `needs: [lint, test]` | [job-orchestration.md → "`needs:`"](../job-orchestration.md?plain=1#L21) |
-| ⑦ | Only run on pushes to main | `if: github.ref == 'refs/heads/main' && github.event_name == 'push'` | [job-orchestration.md → "Conditional Execution"](../job-orchestration.md?plain=1#L54) |
-| ⑧ | Reference the staging secret | `${{ secrets.<NAME> }}` in `env:` | [secrets-variables-environments.md → "Using secrets in a workflow"](../secrets-variables-environments.md?plain=1#L21) |
 
 ---
 
----
+## Part B — Build `cd.yml` (10 min)
 
-## Part B — Add `workflow_dispatch` (5 min)
+Create `.github/workflows/cd.yml`. This file is **release only** — it picks an environment, downloads the dist, and deploys.
 
-Add a manual trigger to the same workflow:
+> **Why a fallback for `environment:`?** On `workflow_dispatch`, `inputs.environment` is set by the user. On `push`, inputs don't exist — so we default to `staging` with `inputs.environment || 'staging'`. Without the fallback, push-to-main deploys would have no environment scope, no approval gate, and no env-scoped secrets.
 
 ```yaml
+name: CD
+
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
-  workflow_dispatch:              # Add this
+  workflow_dispatch:
     inputs:
       environment:
         description: "Target environment"
         required: true
         type: choice
         options: [staging, production]
-      skip-tests:
-        description: "Skip tests (fast deploy)"
-        type: boolean
-        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    # TODO ⑦: Use the input if provided, otherwise default to "staging"
+    environment: # ⬅ fill this in
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
+
+      - name: Build distribution
+        run: |
+          pip install build
+          python -m build
+
+      - name: Deploy
+        run: echo "Deploying to ${{ inputs.environment || 'staging' }}..."
+        env:
+          # TODO ⑧: Reference the DEPLOY_TOKEN secret (resolved per environment)
+          DEPLOY_TOKEN: # ⬅ fill this in
 ```
 
-Use the input in the test job:
+> **Where does `DEPLOY_TOKEN` come from?** When `environment:` is set, GitHub resolves `${{ secrets.DEPLOY_TOKEN }}` from that environment's secrets. So `staging` and `production` each have their own `DEPLOY_TOKEN` value, and the same line works for both.
 
-```yaml
-  test:
-    if: ${{ !inputs.skip-tests }}   # Skip test job if input is true
-```
+> **Note:** This workshop's `cd.yml` rebuilds the dist for simplicity. In production you'd typically trigger CD from a successful CI run via the `workflow_run` trigger or a release tag, and download the artifact CI already built.
 
-Trigger it from the CLI:
+### 💡 Stuck on a CD TODO? Hints with deep links
 
-```bash
-gh workflow run ci.yml \
-  --field environment=staging \
-  --field skip-tests=false
-```
+| # | TODO | Concept | Read this |
+|---|---|---|---|
+| ⑦ | Pick the environment dynamically with a fallback | Expression: `${{ inputs.<x> \|\| 'default' }}` | [secrets-variables-environments.md → "Dynamic environment selection"](../secrets-variables-environments.md?plain=1#L204) |
+| ⑧ | Reference the deploy secret | `${{ secrets.<NAME> }}` resolves per environment | [secrets-variables-environments.md → "Using secrets in a workflow"](../secrets-variables-environments.md?plain=1#L21) |
 
 ---
 
-## Part C — Push and Validate PR Checks (10 min)
+## Part C — Push and Validate PR Checks (5 min)
 
 ```bash
-git add .github/workflows/ci.yml
-git commit -m "ci: add CI workflow with lint, test, build, and deploy jobs"
+git add .github/workflows/ci.yml .github/workflows/cd.yml
+git commit -m "ci/cd: add verification and release workflows"
 git push -u origin feature/<your-name>/ci-workflow
 ```
 
@@ -186,39 +192,35 @@ Open a PR:
 
 ```bash
 gh pr create \
-  --title "ci: add CI workflow" \
-  --body "Adds lint, test, build, and deploy-staging jobs."
+  --title "ci/cd: add CI and CD workflows" \
+  --body "Adds ci.yml (lint/test/build) and cd.yml (env-gated deploy)."
 ```
 
 **Watch the checks run:**
 
 ```bash
-# Watch in terminal
 gh pr checks --watch
-
-# Or watch the run
-gh run list --limit 5
-gh run watch
 ```
 
 **Verify:**
-- [ ] All three required jobs appear as PR status checks
-- [ ] The PR cannot be merged until all checks pass
-- [ ] A failed test blocks the merge (try breaking a test temporarily)
+- [ ] `lint`, `test (matrix x3)`, and `build` all appear as PR status checks (from `ci.yml`)
+- [ ] `deploy` does **not** run on the PR (it's not triggered by `pull_request`)
+- [ ] The PR cannot be merged until all CI checks pass
+- [ ] After merge to `main`, `cd.yml` runs and deploys to `staging`
+- [ ] Manually trigger `cd.yml` with `gh workflow run cd.yml -f environment=production` to test the choice input
 
 ---
 
 ## Bonus Challenges
 
 1. **SHA-pin your actions** — replace `@v4` tags with their full commit SHAs
-2. **Add a `CODEOWNERS` rule** that requires platform-team review for any `.github/workflows/` change
-3. **Add a dependency-review job** using `actions/dependency-review-action`
-4. **Create a reusable deploy workflow** and call it from `ci.yml`
+2. **Trigger CD from CI** — replace `cd.yml`'s `push` trigger with `workflow_run` so it only runs after CI succeeds, and download the dist artifact from the CI run instead of rebuilding
+3. **Add OIDC** — use `permissions: id-token: write` and `aws-actions/configure-aws-credentials` instead of a static `DEPLOY_TOKEN`
+4. **Add a `CODEOWNERS` rule** that requires platform-team review for any `.github/workflows/` change
 
 ---
 
 ## Solution Reference
 
-→ [../../../.github/workflows/01-basic-ci.yml](../../../.github/workflows/01-basic-ci.yml)  
-→ [../../../.github/workflows/02-matrix-build.yml](../../../.github/workflows/02-matrix-build.yml)  
-→ [../../../.github/workflows/03-reusable-workflow.yml](../../../.github/workflows/03-reusable-workflow.yml)
+→ [solutions/02-ci-workflow/.github/workflows/ci.yml](../../../solutions/02-ci-workflow/.github/workflows/ci.yml)
+→ [solutions/02-ci-workflow/.github/workflows/cd.yml](../../../solutions/02-ci-workflow/.github/workflows/cd.yml)
