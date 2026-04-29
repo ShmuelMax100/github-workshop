@@ -29,7 +29,7 @@ on:
   pull_request:
     branches: [main]
 
-# TODO: Set default permissions to read-only at workflow level
+# TODO ①: Set default permissions to read-only at workflow level
 
 jobs:
   # ── Job 1: Lint ────────────────────────────────────────────────────
@@ -39,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
 
-      # TODO: Set up Python 3.11 using actions/setup-python
+      # TODO ②: Set up Python 3.11 using actions/setup-python
 
       - name: Cache pip
         uses: actions/cache@v4
@@ -58,12 +58,12 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    # TODO: Add a matrix for python-version: ["3.10", "3.11", "3.12"]
+    # TODO ③: Add a matrix for python-version: ["3.10", "3.11", "3.12"]
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
 
-      # TODO: Set up Python from matrix variable
+      # TODO ④: Set up Python from matrix variable
 
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -71,12 +71,12 @@ jobs:
       - name: Run tests
         run: pytest src/ --junitxml=test-results.xml
 
-      # TODO: Upload test-results.xml as an artifact (always, even on failure)
+      # TODO ⑤: Upload test-results.xml as an artifact (always, even on failure)
 
   # ── Job 3: Build ───────────────────────────────────────────────────
   build:
     name: Build
-    # TODO: Make this job wait for lint AND test to succeed
+    # TODO ⑥: Make this job wait for lint AND test to succeed
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
@@ -96,7 +96,7 @@ jobs:
   deploy-staging:
     name: Deploy → Staging
     needs: build
-    # TODO: Only run on pushes to main (not PRs)
+    # TODO ⑦: Only run on pushes to main (not PRs)
     runs-on: ubuntu-latest
     environment: staging          # Triggers approval gate (if configured)
 
@@ -112,8 +112,25 @@ jobs:
       - name: Deploy
         run: echo "Deploying to staging..."
         env:
-          # TODO: Reference the STAGING_DEPLOY_TOKEN secret as DEPLOY_TOKEN
+          # TODO ⑧: Reference the STAGING_DEPLOY_TOKEN secret as DEPLOY_TOKEN
 ```
+
+### 💡 Stuck on a TODO? Hints with deep links
+
+Read the linked section first. Open the solution (`solutions/02-ci-workflow/`) only as a last resort.
+
+| # | TODO | Concept | Read this |
+|---|---|---|---|
+| ① | Set default permissions to read-only | `permissions:` key at workflow level | [10-permissions.md → "The `permissions:` key"](../10-permissions.md?plain=1#L34) |
+| ② | Set up Python 3.11 | Using a third-party action via `uses:` | [core-concepts.md → "Steps"](../core-concepts.md?plain=1#L140) |
+| ③ | Add a matrix for python versions | `strategy: matrix:` | [caching-and-matrix.md → "Basic matrix"](../caching-and-matrix.md?plain=1#L116) |
+| ④ | Use the matrix value in setup-python | `${{ matrix.<key> }}` reference | [caching-and-matrix.md → "Basic matrix"](../caching-and-matrix.md?plain=1#L116) |
+| ⑤ | Upload artifact even on failure | `actions/upload-artifact` + `if: always()` | [03-operations-debugging/artifacts.md → "Upload even on failure"](../../03-operations-debugging/artifacts.md?plain=1#L24) |
+| ⑥ | Make `build` wait for `lint` AND `test` | `needs: [lint, test]` | [job-orchestration.md → "`needs:`"](../job-orchestration.md?plain=1#L21) |
+| ⑦ | Only run on pushes to main | `if: github.ref == 'refs/heads/main' && github.event_name == 'push'` | [job-orchestration.md → "Conditional Execution"](../job-orchestration.md?plain=1#L54) |
+| ⑧ | Reference the staging secret | `${{ secrets.<NAME> }}` in `env:` | [secrets-variables-environments.md → "Using secrets in a workflow"](../secrets-variables-environments.md?plain=1#L21) |
+
+---
 
 ---
 
