@@ -13,7 +13,7 @@ Tags (like `@v4`) can be moved to point to different code. A SHA is immutable.
 - uses: actions/checkout@v4
 
 # ✅ Safe — SHA cannot be changed
-- uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+- uses: actions/checkout@v4
 ```
 
 **Finding the SHA:**
@@ -176,7 +176,7 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@v4
       - uses: actions/dependency-review-action@v4
 ```
 

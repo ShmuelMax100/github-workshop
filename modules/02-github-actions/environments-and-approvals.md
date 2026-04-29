@@ -123,7 +123,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
+      - uses: actions/checkout@v4
       - run: ./scripts/deploy.sh
         env:
           DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
@@ -133,7 +133,7 @@ jobs:
     needs: deploy-staging
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
+      - uses: actions/checkout@v4
       - run: pytest tests/smoke/ --base-url=https://staging.securithings.com
 
   deploy-production:
@@ -143,7 +143,7 @@ jobs:
       name: production
       url: https://app.securithings.com
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
+      - uses: actions/checkout@v4
       - run: ./scripts/deploy.sh
         env:
           DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}

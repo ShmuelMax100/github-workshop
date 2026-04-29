@@ -21,8 +21,8 @@ jobs:
         python-version: ["3.10", "3.11", "3.12"]
 
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
       - run: python --version
@@ -56,9 +56,9 @@ jobs:
             upload-results: false
 
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -76,7 +76,7 @@ jobs:
 
       - name: Upload results
         if: matrix.upload-results == true
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
+        uses: actions/upload-artifact@v4
         with:
           name: results-${{ matrix.name }}
           path: "*.xml"
@@ -89,7 +89,7 @@ jobs:
     outputs:
       services: ${{ steps.list.outputs.services }}
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@v4
       - id: list
         run: |
           # In reality, this might scan directories or query an API
@@ -106,6 +106,6 @@ jobs:
         service: ${{ fromJSON(needs.generate-matrix.outputs.services) }}
 
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@v4
       - name: Test service
         run: echo "Testing service: ${{ matrix.service }}"
