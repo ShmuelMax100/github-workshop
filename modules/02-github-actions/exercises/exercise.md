@@ -37,7 +37,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
+      - uses: actions/checkout@v4
 
       # TODO ②: Set up Python 3.11 using actions/setup-python
 
@@ -61,7 +61,7 @@ jobs:
     # TODO ③: Add a matrix for python-version: ["3.10", "3.11", "3.12"]
 
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
+      - uses: actions/checkout@v4
 
       # TODO ④: Set up Python from the matrix variable
 
@@ -79,7 +79,7 @@ jobs:
     # TODO ⑥: Make this job wait for lint AND test to succeed
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
+      - uses: actions/checkout@v4
 
       - name: Build distribution
         run: |
@@ -91,6 +91,28 @@ jobs:
         with:
           name: dist
           path: dist/
+
+  # ── Job 4: Deploy Staging ──────────────────────────────────────────
+  deploy-staging:
+    name: Deploy → Staging
+    needs: build
+    # TODO ⑦: Only run on pushes to main (not PRs)
+    runs-on: ubuntu-latest
+    environment: staging          # Triggers approval gate (if configured)
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download dist
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Deploy
+        run: echo "Deploying to staging..."
+        env:
+          # TODO ⑧: Reference the STAGING_DEPLOY_TOKEN secret as DEPLOY_TOKEN
 ```
 
 ### 💡 Stuck on a CI TODO? Hints with deep links

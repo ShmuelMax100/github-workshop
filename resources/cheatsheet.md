@@ -196,7 +196,7 @@ permissions:
   pull-requests: write
 
 # SHA pinning (replace tag with immutable SHA)
-- uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+- uses: actions/checkout@v4
 
 # Safe env var interpolation (not direct shell injection)
 - env:

@@ -166,7 +166,7 @@ jobs:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
+      - uses: actions/checkout@v4
       - run: python -m build
       - uses: actions/upload-artifact@v4
         with:

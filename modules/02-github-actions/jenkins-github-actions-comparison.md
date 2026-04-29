@@ -118,14 +118,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
+      - uses: actions/checkout@v4
       - run: pip install -r requirements.txt
 
   test:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
+      - uses: actions/checkout@v4
       - run: pytest src/ --junitxml=report.xml
       - uses: actions/upload-artifact@v4
         if: always()
@@ -139,7 +139,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
+      - uses: actions/checkout@v4
       - run: ./scripts/deploy.sh
         env:
           TOKEN: ${{ secrets.DEPLOY_TOKEN }}
