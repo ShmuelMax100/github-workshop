@@ -1,5 +1,15 @@
 # Solution — Exercise 2: CI Workflow
 
+> ## ⚠️ SPOILER — Try the exercise first
+>
+> This is the **reference solution** for Exercise 2.
+> Open it only **after** you've:
+> 1. Read the linked guides for each TODO (the hint table in the exercise),
+> 2. Made a real attempt at filling in the TODOs yourself,
+> 3. Been stuck for 10+ minutes on a specific item.
+>
+> Copy-pasting from here without the struggle defeats the workshop.
+
 > **TL;DR** — Reference solution for Exercise 2: a complete lint → test (matrix) → build → deploy-staging pipeline with the answer for every TODO in the exercise skeleton. Copy `ci.yml` into `.github/workflows/` to compare against your own attempt.
 
 ## What was built
