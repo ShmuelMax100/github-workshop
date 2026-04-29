@@ -1,5 +1,7 @@
 # Secrets, Variables & Environments
 
+> **TL;DR** — `secrets.*` are masked, `vars.*` are plain config, and both can be scoped at org / repo / environment (most-specific wins). Always pass secrets through `env:` rather than interpolating them into `run:` blocks, and pair production deploys with an `environment:` for required reviewers.
+
 ---
 
 ## The Three Types

@@ -1,6 +1,8 @@
 # Quick UI Flows — Search, Blame & Compare
 
-GitHub's web UI has powerful navigation shortcuts that most developers never discover. This guide covers the ones you'll use every day.
+> **TL;DR** — Press `?` to discover every shortcut, `t` for fuzzy file finder, `b` for blame, `y` to convert any URL into a permanent SHA-pinned link, and `.` to open the repo in browser-VS-Code. Always share `y`-permalinks with line ranges so your teammates see the exact code you saw.
+
+GitHub's web UIhas powerful navigation shortcuts that most developers never discover. This guide covers the ones you'll use every day.
 
 ---
 

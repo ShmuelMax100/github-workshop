@@ -1,6 +1,8 @@
 # GitLab → GitHub Concepts Mapping
 
-A side-by-side reference for teams transitioning from GitLab to GitHub.
+> **TL;DR** — Most GitLab concepts have a direct GitHub equivalent (MR → PR, Group → Org, `$CI_COMMIT_SHA` → `${{ github.sha }}`), but two things genuinely change: there are no stages (jobs run in parallel and you sequence them with `needs:`), and every job starts on a fresh VM with no shared state.
+
+A side-by-sidereference for teams transitioning from GitLab to GitHub.
 
 ---
 

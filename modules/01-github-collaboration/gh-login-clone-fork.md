@@ -1,6 +1,8 @@
 # Getting Started — Login, Clone & Fork with `gh`
 
-This guide walks through the first things every developer does when joining a GitHub-based team: authenticate, get the code, and set up a fork for isolated work.
+> **TL;DR** — `gh auth login` (browser flow) once, then `gh repo fork <owner>/<repo> --clone` sets up `origin` (your fork) and `upstream` (the source repo) automatically. Always work on a feature branch, push to `origin`, and open the PR back to `upstream`.
+
+This guidewalks through the first things every developer does when joining a GitHub-based team: authenticate, get the code, and set up a fork for isolated work.
 
 ---
 

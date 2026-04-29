@@ -1,5 +1,7 @@
 # GitHub Actions Runners — Complete Guide
 
+> **TL;DR** — `ubuntu-latest` covers the 90% case with a fresh, ephemeral VM and pre-installed tooling. Reach for self-hosted only when you need private-network access, GPUs, or persistent caches — and **never** point self-hosted runners at a public repo, since fork PRs can execute arbitrary code on them.
+
 ---
 
 ## What is a Runner?

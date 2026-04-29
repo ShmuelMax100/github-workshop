@@ -1,6 +1,8 @@
 # GitHub CLI (`gh`) — Daily Workflows
 
-`gh` brings GitHub directly into the terminal. This guide covers the commands you'll use every day.
+> **TL;DR** — Anything you do in github.com you can do faster with `gh`: open PRs, request reviews, watch checks (`gh pr checks --watch`), tail run logs (`gh run view --log-failed`), set secrets, and trigger workflows. Build muscle memory with `gh alias set` for the commands you run hourly.
+
+`gh` bringsGitHub directly into the terminal. This guide covers the commands you'll use every day.
 
 ---
 

@@ -1,6 +1,8 @@
 # Exercise 1 — Pull Request Workflow
 
-**Duration:** ~20 minutes  
+> **TL;DR** — In ~20 minutes you'll branch, add a `greet()` function and test, open a PR (UI *and* CLI), swap reviews with a partner, address feedback, and squash-merge. The takeaway: a good PR body answers *why*, names the test, and is honest about what's still unchecked.
+
+**Duration:**~20 minutes  
 **Goal:** Create a branch, make a change, open a PR (via UI and CLI), get it reviewed, and merge it.
 
 ---

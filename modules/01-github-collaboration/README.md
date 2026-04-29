@@ -1,6 +1,8 @@
 # Module 1 — GitHub Collaboration & CI Flow
 
-**Duration:** 60 minutes
+> **TL;DR** — The 60-minute collaboration module: GitLab→GitHub terminology, the PR lifecycle, `gh` CLI, branch protection, CODEOWNERS, and a hands-on PR exercise with a partner. Read top-to-bottom, then do the exercise — that's the suggested path.
+
+**Duration:**60 minutes
 
 | Topic | Guide |
 |-------|-------|

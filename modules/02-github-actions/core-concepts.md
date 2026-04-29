@@ -1,5 +1,7 @@
 # GitHub Actions — Core Concepts
 
+> **TL;DR** — A workflow is YAML in `.github/workflows/`: `on:` declares triggers, `jobs:` run in parallel on fresh VMs, `steps:` run sequentially using either `uses:` (an action) or `run:` (a shell command). Reference everything dynamic via `${{ github.* }}`, `${{ secrets.* }}`, `${{ steps.* }}`, and `${{ needs.* }}` contexts.
+
 ---
 
 ## Anatomy of a Workflow File

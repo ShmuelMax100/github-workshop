@@ -1,5 +1,7 @@
 # Monitoring Workflow Runs & Re-Running Jobs
 
+> **TL;DR** — Live-stream runs with `gh run watch`, drill into failures with `gh run view <id> --log-failed`, and use `gh run rerun --failed` for transient flakes (re-run only when the cause is environmental — fix-and-push when it's your code). Add a `concurrency:` block to auto-cancel stale runs on rapid pushes.
+
 ---
 
 ## Viewing Runs in the UI

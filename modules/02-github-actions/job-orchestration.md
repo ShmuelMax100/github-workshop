@@ -1,5 +1,7 @@
 # Job Orchestration — needs, Parallel, Conditional & Data Passing
 
+> **TL;DR** — Jobs run in parallel; sequence them with `needs:`. Gate jobs and steps with `if:` (`github.ref`, `success()`, `failure()`, `always()`). For repeated rapid pushes, add a `concurrency:` block with `cancel-in-progress: true` so only the latest run finishes.
+
 ---
 
 ## Default: Jobs Run in Parallel

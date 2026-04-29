@@ -1,6 +1,8 @@
 # Module 3 — Day-to-Day Operations & Debugging
 
-**Duration:** 30 minutes
+> **TL;DR** — The 30-minute closer: how to read the Actions tab, drive runs from `gh`, upload/download artifacts, and turn on debug logging when something breaks. Short module, high daily ROI.
+
+**Duration:**30 minutes
 
 | Topic | Guide |
 |-------|-------|

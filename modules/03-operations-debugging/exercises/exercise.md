@@ -1,6 +1,8 @@
 # Exercise 3 — Debug a Failing Workflow
 
-**Duration:** ~15 minutes  
+> **TL;DR** — In ~15 minutes you'll deliberately break a test, locate the failure with `gh run view --log-failed`, re-run with `--debug` to see `##[debug]` lines, fix it, and pull artifacts down with `gh run download`. The point: own the full failure-to-fix loop from the terminal.
+
+**Duration:**~15 minutes  
 **Goal:** Trigger a failing workflow, inspect logs with CLI and UI, enable debug logging, fix the issue, and download artifacts.
 
 ---

@@ -1,6 +1,8 @@
 # Reusable Workflows & Composite Actions
 
-Keep your CI/CD DRY — define once, call from anywhere.
+> **TL;DR** — Use a **reusable workflow** (`on: workflow_call`, called from `jobs.<x>.uses:`) to share an entire pipeline with its own runners and approval gates. Use a **composite action** (`runs: using: composite`, called as a step) to DRY up 2–5 setup steps that always appear together inside a job.
+
+Keep your CI/CD DRY— define once, call from anywhere.
 
 ---
 

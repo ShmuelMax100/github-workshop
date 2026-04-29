@@ -1,6 +1,8 @@
 # Exercise 2 — Build a Complete CI Workflow
 
-**Duration:** ~30 minutes  
+> **TL;DR** — In ~30 minutes you'll fill in the TODOs of a `ci.yml` skeleton (matrix test, `needs:`, `if: github.ref == 'refs/heads/main'`, artifact upload, environment secret), add a `workflow_dispatch` trigger, and watch branch protection block your PR until every required check is green.
+
+**Duration:**~30 minutes  
 **Goal:** Build a CI workflow from scratch, push code, and validate that PR checks block merges until all gates pass.
 
 ---

@@ -1,6 +1,8 @@
 # Instructor Guide
 
-Timing, live demo script, and known stumbling points for each module.
+> **TL;DR** — Per-module timing, the live-demo script, and the "common issues" you'll get asked. For Module 2, pick 5 of the 9 topics to demo live — the rest is reading material. The most reliable trip-hazards are branch protection blocking merges and YAML indentation breaking workflow discovery.
+
+Timing,live demo script, and known stumbling points for each module.
 
 ---
 

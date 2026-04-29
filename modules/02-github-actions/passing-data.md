@@ -1,6 +1,8 @@
 # Passing Data Between Steps and Jobs
 
-GitHub Actions jobs run on isolated VMs — they share nothing by default. This guide covers every mechanism for moving data within a job and across jobs.
+> **TL;DR** — Within a job, write `key=value` to `$GITHUB_OUTPUT` (referenced as `steps.<id>.outputs.<key>`) or `$GITHUB_ENV` for plain env vars. Across jobs, use job `outputs:` for small strings and `upload-artifact`/`download-artifact` for files — there is no shared filesystem.
+
+GitHub Actions jobsrun on isolated VMs — they share nothing by default. This guide covers every mechanism for moving data within a job and across jobs.
 
 ---
 

@@ -1,6 +1,8 @@
 # Pull Request Lifecycle — Create, Review, Approve, Merge
 
-A Pull Request (PR) is the core unit of collaboration on GitHub. It is how code is proposed, discussed, and merged into a shared branch.
+> **TL;DR** — Branch → push → open PR (Draft or Ready) → review with approve / request-changes / comment → address feedback by pushing more commits → squash-merge once checks are green and approvals are in. Keep PRs under ~400 lines, one concern each, and never force-push after review starts.
+
+A Pull Request(PR) is the core unit of collaboration on GitHub. It is how code is proposed, discussed, and merged into a shared branch.
 
 ---
 

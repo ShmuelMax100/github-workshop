@@ -1,6 +1,8 @@
 # GitLab → GitHub: Daily Workflows & Repo Lifecycle
 
-A deck for engineers and engineering leaders moving from GitLab to GitHub.
+> **TL;DR** — The Markdown source-of-truth for the workshop slide deck (25 slides, 16:9). Each slide is *Title → 3–5 bullets → speaker notes → optional visual hint*; `[INTERLUDE]` slides are full-bleed humor breaks. Edit here, then regenerate the `.pptx` with `build_pptx.py`.
+
+A deckfor engineers and engineering leaders moving from GitLab to GitHub.
 Format per slide: **Title**, **Bullets (3–5)**, **Speaker notes**, and (where useful) a **Visual hint**.
 Slides marked `[INTERLUDE]` are short humor breaks (full-bleed quote layout, no bullets).
 

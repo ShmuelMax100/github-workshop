@@ -1,5 +1,7 @@
 # Draft PRs & PR Templates — Best Practices
 
+> **TL;DR** — Open a Draft PR (`gh pr create --draft`) when work is in progress: CI runs, reviewers aren't pinged, and merge is blocked until you mark it ready. Use `.github/PULL_REQUEST_TEMPLATE.md` to force every PR to answer *what changed, why, and how it was tested* — short templates beat long ones.
+
 ---
 
 ## Draft Pull Requests

@@ -1,6 +1,8 @@
 # Manual Triggers — `workflow_dispatch`
 
-`workflow_dispatch` lets you trigger a workflow on demand from the GitHub UI or `gh` CLI, with optional typed input parameters.
+> **TL;DR** — `workflow_dispatch` adds a **Run workflow** button (and `gh workflow run`) with typed inputs — `string`, `boolean`, `choice`, `environment`, `number`. Combine with `push`/`schedule` for nightly+manual flows, but always set defaults since `inputs.*` is empty when fired by other events.
+
+`workflow_dispatch` letsyou trigger a workflow on demand from the GitHub UI or `gh` CLI, with optional typed input parameters.
 
 ---
 
