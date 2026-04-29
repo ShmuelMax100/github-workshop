@@ -1,9 +1,9 @@
-# Exercise 2 — Build a CI Pipeline and a CD Pipeline
+# Exercise 2 — Build a CI Pipeline
 
-> **TL;DR** — In ~30 minutes you'll build `ci.yml` (lint → test matrix → build, runs on every push/PR) and `cd.yml` (deploy, runs on `workflow_dispatch` and push to main, gated by an environment).
+> **TL;DR** — In ~20 minutes you'll build `ci.yml` (lint → test matrix → build) and open a PR to watch it run as required status checks.
 
-**Duration:** ~30 minutes
-**Goal:** Two workflows, one pull request, branch protection enforcing every required check before merge.
+**Duration:** ~20 minutes
+**Goal:** A working CI workflow running on every PR as required status checks.
 
 ---
 
@@ -108,105 +108,45 @@ Read the linked section first. Open the solution (`solutions/02-ci-workflow/`) o
 
 ---
 
-## Part B — Build `cd.yml` (10 min)
+## Part B — Push and validate CI on a PR (5 min)
 
-Create `.github/workflows/cd.yml` — pick an environment and deploy.
-
-> **Why a fallback for `environment:`?** On `workflow_dispatch`, `inputs.environment` is set by the user. On `push`, inputs don't exist — so we default to `staging` with `inputs.environment || 'staging'`. Without the fallback, push-to-main deploys would have no environment scope, no approval gate, and no env-scoped secrets.
-
-```yaml
-name: CD
-
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: "Target environment"
-        required: true
-        type: choice
-        options: [staging, production]
-
-permissions:
-  contents: read
-
-jobs:
-  deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-    # TODO ⑦: Use the input if provided, otherwise default to "staging"
-    environment: # ⬅ fill this in
-
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
-
-      - name: Build distribution
-        run: |
-          pip install build
-          python -m build
-
-      - name: Deploy
-        run: echo "Deploying to ${{ inputs.environment || 'staging' }}..."
-        env:
-          # TODO ⑧: Reference the DEPLOY_TOKEN secret (resolved per environment)
-          DEPLOY_TOKEN: # ⬅ fill this in
-```
-
-> **Where does `DEPLOY_TOKEN` come from?** When `environment:` is set, GitHub resolves `${{ secrets.DEPLOY_TOKEN }}` from that environment's secrets. So `staging` and `production` each have their own `DEPLOY_TOKEN` value, and the same line works for both.
-
-> **Note:** This workshop's `cd.yml` rebuilds the dist for simplicity. In production you'd typically trigger CD from a successful CI run via the `workflow_run` trigger or a release tag, and download the artifact CI already built.
-
-### 💡 Stuck on a CD TODO? Hints with deep links
-
-| # | TODO | Concept | Read this |
-|---|---|---|---|
-| ⑦ | Pick the environment dynamically with a fallback | Expression: `${{ inputs.<x> \|\| 'default' }}` | [secrets-variables-environments.md → "Dynamic environment selection"](../secrets-variables-environments.md?plain=1#L204) |
-| ⑧ | Reference the deploy secret | `${{ secrets.<NAME> }}` resolves per environment | [secrets-variables-environments.md → "Using secrets in a workflow"](../secrets-variables-environments.md?plain=1#L21) |
-
----
-
-## Part C — Push and Validate PR Checks (5 min)
+Push your branch and open a PR so `ci.yml` runs as required status checks.
 
 ```bash
-git add .github/workflows/ci.yml .github/workflows/cd.yml
-git commit -m "ci/cd: add verification and release workflows"
+git add .github/workflows/ci.yml
+git commit -m "ci: add lint, test matrix, and build workflow"
 git push -u origin feature/<your-name>/ci-workflow
 ```
 
-Open a PR:
+Open a PR and watch the checks:
 
 ```bash
 gh pr create \
-  --title "ci/cd: add CI and CD workflows" \
-  --body "Adds ci.yml (lint/test/build) and cd.yml (env-gated deploy)."
-```
+  --title "ci: add CI workflow" \
+  --body "Adds ci.yml (lint, test matrix, build)."
 
-**Watch the checks run:**
-
-```bash
 gh pr checks --watch
 ```
 
-**Verify:**
-- [ ] `lint`, `test (matrix x3)`, and `build` all appear as PR status checks (from `ci.yml`)
-- [ ] `deploy` does **not** run on the PR (it's not triggered by `pull_request`)
+**Verify on the PR's "Checks" tab:**
+- [ ] `lint` runs and passes
+- [ ] `test (3.10)`, `test (3.11)`, `test (3.12)` all run in parallel and pass
+- [ ] `build` waits for `lint` and `test` to finish, then runs and passes
+- [ ] `test-results.xml` artifact is attached to the run
 - [ ] The PR cannot be merged until all CI checks pass
-- [ ] After merge to `main`, `cd.yml` runs and deploys to `staging`
-- [ ] Manually trigger `cd.yml` with `gh workflow run cd.yml -f environment=production` to test the choice input
+
+> **If a check fails:** click the failing job in the PR's Checks tab → expand the failing step to read the logs. Fix locally, commit, push — the PR re-runs CI automatically.
 
 ---
 
 ## Bonus Challenges
 
 1. **SHA-pin your actions** — replace `@v4` tags with their full commit SHAs
-2. **Trigger CD from CI** — replace `cd.yml`'s `push` trigger with `workflow_run` so it only runs after CI succeeds, and download the dist artifact from the CI run instead of rebuilding
-3. **Add OIDC** — use `permissions: id-token: write` and `aws-actions/configure-aws-credentials` instead of a static `DEPLOY_TOKEN`
-4. **Add a `CODEOWNERS` rule** that requires platform-team review for any `.github/workflows/` change
+2. **Add a concurrency group** so a new push to the same PR cancels in-flight runs
+3. **Add a `CODEOWNERS` rule** that requires platform-team review for any `.github/workflows/` change
 
 ---
 
 ## Solution Reference
 
 → [solutions/02-ci-workflow/.github/workflows/ci.yml](../../../solutions/02-ci-workflow/.github/workflows/ci.yml)
-→ [solutions/02-ci-workflow/.github/workflows/cd.yml](../../../solutions/02-ci-workflow/.github/workflows/cd.yml)
