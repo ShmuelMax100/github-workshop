@@ -15,6 +15,7 @@
 | Reusable workflows & composite actions | [reusable-workflows.md](./reusable-workflows.md) |
 | Performance & scale: caching & matrix builds | [caching-and-matrix.md](./caching-and-matrix.md) |
 | Security best practices & SHA pinning | [security-best-practices.md](./security-best-practices.md) |
+| `GITHUB_TOKEN` & least-privilege permissions | [10-permissions.md](./10-permissions.md) |
 | Runners: hosted vs self-hosted | [runners-guide.md](./runners-guide.md) |
 | Manual triggers (`workflow_dispatch`) | [manual-triggers.md](./manual-triggers.md) |
 
