@@ -193,7 +193,6 @@ Or use the UI: click **Squash and merge** → **Confirm**.
 git checkout main
 git fetch origin
 git reset --hard origin/main          # discard the now-obsolete local commits
-git branch -d feature/<your-name>/hello-world  # only if `gh pr merge --delete-branch` didn't already do it
 ```
 
 ---
