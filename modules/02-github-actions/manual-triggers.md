@@ -146,4 +146,4 @@ jobs:
 | Reseed test data | `workflow_dispatch` on a maintenance workflow |
 | Nightly build + manual override | `schedule` + `workflow_dispatch` combined |
 
-→ See the full working example: [../../.github/workflows/04-manual-trigger.yml](../../.github/workflows/04-manual-trigger.yml)
+→ See the full working example: [./examples/04-manual-trigger.yml](./examples/04-manual-trigger.yml)

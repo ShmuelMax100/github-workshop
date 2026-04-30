@@ -63,12 +63,18 @@
 
 ## Example Workflows
 
+These are **read-only teaching examples** — they live under `modules/` so they don't auto-run. The only workflow GitHub actually executes is [`ci.yml`](./.github/workflows/ci.yml) (the exercise solution running on this repo).
+
 | Workflow | What it demonstrates |
 |----------|----------------------|
-| [01-basic-ci.yml](./.github/workflows/01-basic-ci.yml) | Full CI pipeline: lint → test (matrix) → build → deploy |
-| [02-matrix-build.yml](./.github/workflows/02-matrix-build.yml) | Cross-OS, multi-Python matrix with dynamic combinations |
-| [03-reusable-workflow.yml](./.github/workflows/03-reusable-workflow.yml) | Callable deploy workflow with inputs, secrets & outputs |
-| [04-manual-trigger.yml](./.github/workflows/04-manual-trigger.yml) | `workflow_dispatch` with typed inputs and validation |
+| [01-basic-ci.yml](./modules/02-github-actions/examples/01-basic-ci.yml) | Full CI pipeline: lint → test (matrix) → build → deploy |
+| [02-matrix-build.yml](./modules/02-github-actions/examples/02-matrix-build.yml) | Cross-OS, multi-Python matrix with `exclude:` and `include:` |
+| [02-matrix-build-advanced.yml](./modules/02-github-actions/examples/02-matrix-build-advanced.yml) | Advanced matrix patterns: include-only and dynamic matrix from job output |
+| [03-reusable-workflow.yml](./modules/02-github-actions/examples/03-reusable-workflow.yml) | Callable deploy workflow (the **callee**) — inputs, secrets, outputs |
+| [03-reusable-workflow-caller.yml](./modules/02-github-actions/examples/03-reusable-workflow-caller.yml) | How to **call** the reusable workflow above (build → deploy staging → prod) |
+| [04-manual-trigger.yml](./modules/02-github-actions/examples/04-manual-trigger.yml) | `workflow_dispatch` with typed inputs and validation |
+
+> 💡 To run any of these for real, copy it into your own repo's `.github/workflows/` directory.
 
 ---
 

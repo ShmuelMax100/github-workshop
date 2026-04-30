@@ -72,7 +72,7 @@ With 80 minutes and a hands-on exercise, you can cover 5 topics well. The others
 
 **Recommended live demo topics:**
 
-1. **Core concepts (15 min)** — walk through `01-basic-ci.yml` line by line
+1. **Core concepts (15 min)** — walk through `examples/01-basic-ci.yml` line by line
    - Explain `on:`, `jobs:`, `steps:`, `uses:` vs `run:`
    - Show the Actions tab as you push — watch it trigger in real time
    - Key message: "This is your Jenkinsfile, but in YAML"
@@ -87,7 +87,7 @@ With 80 minutes and a hands-on exercise, you can cover 5 topics well. The others
    - Key message: "Environments replace Jenkins' manual approval step"
 
 4. **Job orchestration (10 min)**
-   - Show the `needs:` graph in `01-basic-ci.yml` — draw it on a whiteboard
+   - Show the `needs:` graph in `examples/01-basic-ci.yml` — draw it on a whiteboard
    - Show `if: github.ref == 'refs/heads/main'` — conditional deploy
    - Key message: "No stages — you define a dependency graph"
 

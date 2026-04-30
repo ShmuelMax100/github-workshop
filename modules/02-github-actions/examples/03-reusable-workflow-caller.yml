@@ -1,7 +1,12 @@
 name: "Example — Reusable Workflow Caller"
 
-# This workflow CALLS the reusable workflow defined at:
-# .github/workflows/03-reusable-workflow.yml
+# This workflow CALLS the reusable workflow `03-reusable-workflow.yml`.
+#
+# 📚 Read-only example. To actually run this:
+#   1. Copy BOTH files into your repo's `.github/workflows/` directory
+#      (reusable workflows MUST live in `.github/workflows/` to be callable
+#      via `uses: ./.github/workflows/...`).
+#   2. Add the secrets `STAGING_DEPLOY_TOKEN` and `PROD_DEPLOY_TOKEN`.
 #
 # Pattern: CI builds the artifact, then calls the reusable deploy workflow
 # for each target environment.
