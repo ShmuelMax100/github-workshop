@@ -12,7 +12,7 @@
 **Step 1:** Create a branch with a broken test:
 
 ```bash
-BRANCH="feature/$(gh api user -q .login)/debug-exercise"
+BRANCH="feature/$(whoami)/debug-exercise"
 git checkout -b "$BRANCH"
 ```
 

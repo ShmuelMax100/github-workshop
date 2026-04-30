@@ -22,7 +22,7 @@ cd github-workshop
 
 ```bash
 # Branch name auto-fills with your GitHub handle — copy-paste as-is
-BRANCH="feature/$(gh api user -q .login)/hello-world"
+BRANCH="feature/$(whoami)/hello-world"
 git checkout -b "$BRANCH"
 ```
 

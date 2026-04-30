@@ -54,7 +54,7 @@ git remote -v
 ## Step 3 — Create your personal branch
 
 ```bash
-git checkout -b "workshop/$(gh api user -q .login)"
+git checkout -b "workshop/$(whoami)"
 # example: git checkout -b workshop/alice
 ```
 

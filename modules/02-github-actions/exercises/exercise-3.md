@@ -42,7 +42,7 @@
 
 ```bash
 git checkout main && git pull
-BRANCH="feature/$(gh api user -q .login)/release-workflow"
+BRANCH="feature/$(whoami)/release-workflow"
 git checkout -b "$BRANCH"
 mkdir -p .github/actions/setup-python-project
 mkdir -p .github/workflows

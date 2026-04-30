@@ -10,7 +10,7 @@
 ## Setup
 
 ```bash
-BRANCH="feature/$(gh api user -q .login)/ci-workflow"
+BRANCH="feature/$(whoami)/ci-workflow"
 git checkout -b "$BRANCH"
 mkdir -p .github/workflows
 ```

@@ -10,7 +10,7 @@ A `greet()` function in `app.py` and its matching tests in `test_app.py`.
 
 ```bash
 # 1. Branch
-BRANCH="feature/$(gh api user -q .login)/hello-world"
+BRANCH="feature/$(whoami)/hello-world"
 git checkout -b "$BRANCH"
 
 # 2. Copy solution files into src/
