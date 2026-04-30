@@ -46,6 +46,8 @@
 | Manual triggers (`workflow_dispatch`) | [manual-triggers.md](./modules/02-github-actions/manual-triggers.md) |
 | **Hands-on exercise** | [exercises/exercise.md](./modules/02-github-actions/exercises/exercise.md) |
 | Solution | [solutions/02-ci-workflow/](./solutions/02-ci-workflow/) |
+| **Bonus exercise:** release pipeline (dispatch + reusable + matrix + composite + uses) | [exercises/exercise-3.md](./modules/02-github-actions/exercises/exercise-3.md) |
+| Solution | [solutions/03-release-workflow/](./solutions/03-release-workflow/) |
 
 ---
 

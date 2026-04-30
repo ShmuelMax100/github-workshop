@@ -23,3 +23,7 @@
 **Hands-on exercise →** [exercises/exercise.md](./exercises/exercise.md)
 
 **Solution →** [../../solutions/02-ci-workflow/](../../solutions/02-ci-workflow/)
+
+**Bonus exercise (release pipeline) →** [exercises/exercise-3.md](./exercises/exercise-3.md)
+
+**Solution →** [../../solutions/03-release-workflow/](../../solutions/03-release-workflow/)
