@@ -189,40 +189,12 @@ Or use the UI: click **Squash and merge** → **Confirm**.
 
 ## Step 7 — Sync your local `main` after merge
 
-> ⚠️ **This trips up almost everyone.** A squash-merge creates a **new commit** on remote `main` (with a different hash than your branch's commits). Your local `main` still has the old hashes, so the two will appear **diverged** even though your work is already merged. If you blindly run `git pull` you can end up in a tangled merge with conflicts on files you never touched.
-
-The safe recovery — **your work is already on remote `main`, so local can be reset to match it**:
-
 ```bash
 git checkout main
 git fetch origin
 git reset --hard origin/main          # discard the now-obsolete local commits
 git branch -d feature/<your-name>/hello-world  # only if `gh pr merge --delete-branch` didn't already do it
 ```
-
-Verify:
-
-```bash
-git status
-# On branch main
-# Your branch is up to date with 'origin/main'.
-# nothing to commit, working tree clean
-```
-
-> 💡 **Rule of thumb:** after every squash-merge, run `git checkout main && git fetch && git reset --hard origin/main`. Don't `git pull` — if main has diverged, pull will try to merge and create the mess described above.
-
-### If you're already in the tangled state
-
-Symptoms: `git status` shows files like `src/test_app.py: needs merge`, `git merge --abort` says *"Entry 'README.md' not uptodate"*, `git stash` fails the same way.
-
-```bash
-git reset --hard HEAD          # drop the half-applied merge
-git clean -fd                  # remove untracked files left over
-git fetch origin
-git reset --hard origin/main   # match remote exactly
-```
-
-Your work is already in remote `main` (the squash commit), so nothing is lost.
 
 ---
 
