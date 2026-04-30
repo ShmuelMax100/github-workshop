@@ -66,23 +66,22 @@ inputs:
     required: false
     default: "3.11"
 
-# TODO ①: Declare this as a composite action
+# TODO ①: Wrap the steps below in a `runs:` block that declares this as a
+#         composite action. (See "Composite Actions" in the guide.)
 
-runs:
-  using: "composite"
-  steps:
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
+steps:
+  - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
 
-    # TODO ②: Set up Python using inputs.python-version
+  # TODO ②: Set up Python using inputs.python-version
 
-    - name: Cache pip
-      uses: actions/cache@v4
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-py${{ inputs.python-version }}-${{ hashFiles('requirements.txt') }}
-        restore-keys: ${{ runner.os }}-py${{ inputs.python-version }}-
+  - name: Cache pip
+    uses: actions/cache@v4
+    with:
+      path: ~/.cache/pip
+      key: ${{ runner.os }}-py${{ inputs.python-version }}-${{ hashFiles('requirements.txt') }}
+      restore-keys: ${{ runner.os }}-py${{ inputs.python-version }}-
 
-    # TODO ③: Add a step that runs `pip install -r requirements.txt`
+  # TODO ③: Add a step that runs `pip install -r requirements.txt`
 ```
 
 > 💡 **Why composite actions?** They live in your repo (no marketplace publish needed), are referenced as `uses: ./.github/actions/setup-python-project`, and DRY up workflows. Read more: [reusable-workflows.md → "Composite actions"](../reusable-workflows.md).
