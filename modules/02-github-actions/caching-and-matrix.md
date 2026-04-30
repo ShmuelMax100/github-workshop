@@ -132,6 +132,45 @@ jobs:
 
 This spawns **3 parallel jobs**, one per Python version.
 
+### Dynamic matrix from a workflow input
+
+A common pattern in **reusable workflows**: accept a JSON-array *as a string* and feed it into the matrix with `fromJSON()`. This lets callers decide the matrix shape per-invocation.
+
+```yaml
+on:
+  workflow_call:
+    inputs:
+      python-versions:
+        description: 'JSON array of Python versions, e.g. ["3.10","3.11","3.12"]'
+        type: string                 # workflow_call inputs only support string/boolean/number
+        required: false
+        default: '["3.11"]'          # default is the string '["3.11"]', not a YAML list
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ${{ fromJSON(inputs.python-versions) }}   # parse the string into a real array
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pytest
+```
+
+Caller passes whichever shape it wants:
+
+```yaml
+jobs:
+  validate:
+    uses: ./.github/workflows/reusable-validate.yml
+    with:
+      python-versions: '["3.10","3.11","3.12"]'   # 3 jobs
+```
+
+> ⚠️ `workflow_call` inputs cannot be typed as `array` or `object` — they must be strings, booleans, or numbers. `fromJSON()` is the standard way to recover structured data on the callee side.
+
 ### Multi-dimensional matrix
 
 ```yaml

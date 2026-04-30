@@ -156,7 +156,7 @@ jobs:
 | # | TODO | Concept | Read this |
 |---|---|---|---|
 | ④ | `on: workflow_call:` | Reusable workflow trigger | [reusable-workflows.md → "Reusable Workflows"](../reusable-workflows.md?plain=1#L21) |
-| ⑤ | `fromJSON()` to expand matrix | Dynamic matrix from input string | [caching-and-matrix.md → "Basic matrix"](../caching-and-matrix.md?plain=1#L116) |
+| ⑤ | `fromJSON()` to expand matrix | Dynamic matrix from input string | [caching-and-matrix.md → "Dynamic matrix from a workflow input"](../caching-and-matrix.md?plain=1#L135) |
 | ⑥ | Local action via `uses: ./path` | Calling a composite action | [reusable-workflows.md → "Use the composite action"](../reusable-workflows.md?plain=1#L143) |
 
 → Solution: [solutions/03-release-workflow/.github/workflows/reusable-validate.yml](../../../solutions/03-release-workflow/.github/workflows/reusable-validate.yml)
