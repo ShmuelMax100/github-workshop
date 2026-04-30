@@ -91,9 +91,9 @@ runs:
 
 | # | TODO | Concept | Read this |
 |---|---|---|---|
-| ① | `runs.using: "composite"` | Composite action declaration | [reusable-workflows.md → "Composite actions"](../reusable-workflows.md) |
-| ② | Use input in composite step | `${{ inputs.<name> }}` in actions | [core-concepts.md → "Steps"](../core-concepts.md) |
-| ③ | `shell: bash` for run steps | Composite action requirement | [reusable-workflows.md](../reusable-workflows.md) |
+| ① | `runs.using: "composite"` | Composite action declaration | [reusable-workflows.md → "Composite Actions"](../reusable-workflows.md?plain=1#L102) |
+| ② | Use input in composite step | `${{ inputs.<name> }}` in actions | [reusable-workflows.md → composite example](../reusable-workflows.md?plain=1#L106) |
+| ③ | `shell: bash` for run steps | Composite action requirement | [reusable-workflows.md → composite example](../reusable-workflows.md?plain=1#L140) |
 
 → Solution: [solutions/03-release-workflow/.github/actions/setup-python-project/action.yml](../../../solutions/03-release-workflow/.github/actions/setup-python-project/action.yml)
 
@@ -156,9 +156,9 @@ jobs:
 
 | # | TODO | Concept | Read this |
 |---|---|---|---|
-| ④ | `on: workflow_call:` | Reusable workflow trigger | [reusable-workflows.md → "Reusable workflows"](../reusable-workflows.md) |
-| ⑤ | `fromJSON()` to expand matrix | Dynamic matrix from input string | [caching-and-matrix.md → "Dynamic matrix"](../caching-and-matrix.md) |
-| ⑥ | Local action via `uses: ./path` | Calling a composite action | [reusable-workflows.md](../reusable-workflows.md) |
+| ④ | `on: workflow_call:` | Reusable workflow trigger | [reusable-workflows.md → "Reusable Workflows"](../reusable-workflows.md?plain=1#L21) |
+| ⑤ | `fromJSON()` to expand matrix | Dynamic matrix from input string | [caching-and-matrix.md → "Basic matrix"](../caching-and-matrix.md?plain=1#L116) |
+| ⑥ | Local action via `uses: ./path` | Calling a composite action | [reusable-workflows.md → "Use the composite action"](../reusable-workflows.md?plain=1#L143) |
 
 → Solution: [solutions/03-release-workflow/.github/workflows/reusable-validate.yml](../../../solutions/03-release-workflow/.github/workflows/reusable-validate.yml)
 
@@ -250,10 +250,10 @@ jobs:
 
 | # | TODO | Concept | Read this |
 |---|---|---|---|
-| ⑦ | `workflow_dispatch` inputs | Manual triggers | [manual-triggers.md](../manual-triggers.md) |
-| ⑧ | `jobs.<id>.uses:` | Calling a reusable workflow | [reusable-workflows.md](../reusable-workflows.md) |
-| ⑨ | Reusing the composite action | DRY principle | [reusable-workflows.md](../reusable-workflows.md) |
-| ⑩ | Third-party action via SHA-pinned `uses:` | Marketplace actions | [security-best-practices.md → "SHA-pin"](../security-best-practices.md) |
+| ⑦ | `workflow_dispatch` inputs | Manual triggers | [manual-triggers.md → "Inputs"](../manual-triggers.md?plain=1#L20) |
+| ⑧ | `jobs.<id>.uses:` | Calling a reusable workflow | [reusable-workflows.md → "Call the reusable workflow"](../reusable-workflows.md?plain=1#L64) |
+| ⑨ | Reusing the composite action | DRY principle | [reusable-workflows.md → "When to Use Which"](../reusable-workflows.md?plain=1#L159) |
+| ⑩ | Third-party action via SHA-pinned `uses:` | Marketplace actions | [security-best-practices.md → "SHA Pin Third-Party Actions"](../security-best-practices.md?plain=1#L7) |
 
 → Solution: [solutions/03-release-workflow/.github/workflows/release.yml](../../../solutions/03-release-workflow/.github/workflows/release.yml)
 
