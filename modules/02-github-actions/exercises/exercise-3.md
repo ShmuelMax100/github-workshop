@@ -324,4 +324,7 @@ git push origin v0.1.1
 
 ## Solution Reference
 
-→ [solutions/03-release-workflow/](../../../solutions/03-release-workflow/)
+- → [solutions/03-release-workflow/.github/actions/setup-python-project/action.yml](../../../solutions/03-release-workflow/.github/actions/setup-python-project/action.yml) — Part A (composite action)
+- → [solutions/03-release-workflow/.github/workflows/reusable-validate.yml](../../../solutions/03-release-workflow/.github/workflows/reusable-validate.yml) — Part B (reusable workflow + matrix)
+- → [solutions/03-release-workflow/.github/workflows/release.yml](../../../solutions/03-release-workflow/.github/workflows/release.yml) — Part C (dispatch + tags + publish)
+- → [solutions/03-release-workflow/README.md](../../../solutions/03-release-workflow/README.md) — walkthrough notes
