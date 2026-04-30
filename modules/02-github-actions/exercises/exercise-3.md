@@ -42,7 +42,8 @@
 
 ```bash
 git checkout main && git pull
-git checkout -b feature/<your-name>/release-workflow
+BRANCH="feature/$(gh api user -q .login)/release-workflow"
+git checkout -b "$BRANCH"
 mkdir -p .github/actions/setup-python-project
 mkdir -p .github/workflows
 ```
@@ -272,7 +273,7 @@ jobs:
 ```bash
 git add .github/
 git commit -m "ci: add release pipeline (dispatch + tags + reusable + matrix)"
-git push -u origin feature/<your-name>/release-workflow
+git push -u origin "$BRANCH"
 gh pr create --title "ci: add release workflow" --body "Adds release.yml with dispatch + reusable + composite."
 # After merge to main:
 gh workflow run release.yml -f version=v0.1.0 -f prerelease=true

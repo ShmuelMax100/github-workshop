@@ -12,7 +12,8 @@
 **Step 1:** Create a branch with a broken test:
 
 ```bash
-git checkout -b feature/<your-name>/debug-exercise
+BRANCH="feature/$(gh api user -q .login)/debug-exercise"
+git checkout -b "$BRANCH"
 ```
 
 **Step 2:** Open `src/test_app.py` and introduce an intentional failure:
@@ -28,7 +29,7 @@ def test_intentional_failure():
 ```bash
 git add src/test_app.py
 git commit -m "test: add intentional failure for debug exercise"
-git push -u origin feature/<your-name>/debug-exercise
+git push -u origin "$BRANCH"
 ```
 
 **Step 4:** Open a PR:

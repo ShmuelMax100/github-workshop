@@ -19,7 +19,7 @@ def test_intentional_failure():
 ```bash
 git add src/test_app.py
 git commit -m "test: intentional failure for debug exercise"
-git push -u origin feature/<your-name>/debug-exercise
+git push -u origin "$BRANCH"
 gh pr create --title "debug: intentional failure exercise" --body "."
 ```
 

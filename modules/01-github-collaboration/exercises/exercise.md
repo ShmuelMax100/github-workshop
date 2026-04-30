@@ -21,8 +21,9 @@ cd github-workshop
 ## Step 1 — Create a Feature Branch
 
 ```bash
-# Replace <your-name> with your name or GitHub handle
-git checkout -b feature/<your-name>/hello-world
+# Branch name auto-fills with your GitHub handle — copy-paste as-is
+BRANCH="feature/$(gh api user -q .login)/hello-world"
+git checkout -b "$BRANCH"
 ```
 
 ---
@@ -48,7 +49,7 @@ Commit your changes:
 ```bash
 git add src/
 git commit -m "feat: add greet function"
-git push -u origin feature/<your-name>/hello-world
+git push -u origin "$BRANCH"
 ```
 
 ---
@@ -57,7 +58,7 @@ git push -u origin feature/<your-name>/hello-world
 
 1. Go to the repository on GitHub
 2. You'll see a banner: **"Compare & pull request"** — click it
-3. Set **Base:** `main` and **Title:** `feat: add greet function (<your-name>)`
+3. Set **Base:** `main` and **Title:** `feat: add greet function`
 4. The body is pre-filled by the PR template — fill in each section (see guide below)
 5. Click **Create pull request**
 
@@ -130,7 +131,7 @@ Closes #12
 ```bash
 gh pr create \
   --base main \
-  --title "feat: add greet function (<your-name>)" \
+  --title "feat: add greet function" \
   --body "Adds a greet() function and a matching test." \
   --reviewer <partner-github-handle>
 ```
@@ -193,6 +194,10 @@ Or use the UI: click **Squash and merge** → **Confirm**.
 git checkout main
 git fetch origin
 git reset --hard origin/main          # discard the now-obsolete local commits
+<<<<<<< Updated upstream
+=======
+git branch -d "$BRANCH" 2>/dev/null  # only if `gh pr merge --delete-branch` didn't already do it
+>>>>>>> Stashed changes
 ```
 
 ---

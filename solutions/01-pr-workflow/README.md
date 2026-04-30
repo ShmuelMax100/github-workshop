@@ -10,7 +10,8 @@ A `greet()` function in `app.py` and its matching tests in `test_app.py`.
 
 ```bash
 # 1. Branch
-git checkout -b feature/<your-name>/hello-world
+BRANCH="feature/$(gh api user -q .login)/hello-world"
+git checkout -b "$BRANCH"
 
 # 2. Copy solution files into src/
 cp solutions/01-pr-workflow/app.py src/app.py
@@ -19,7 +20,7 @@ cp solutions/01-pr-workflow/test_app.py src/test_app.py
 # 3. Commit & push
 git add src/
 git commit -m "feat: add greet function"
-git push -u origin feature/<your-name>/hello-world
+git push -u origin "$BRANCH"
 
 # 4. Open PR
 gh pr create --base main --title "feat: add greet function" --body "Adds greet() with tests."

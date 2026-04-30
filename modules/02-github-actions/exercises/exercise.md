@@ -10,7 +10,8 @@
 ## Setup
 
 ```bash
-git checkout -b feature/<your-name>/ci-workflow
+BRANCH="feature/$(gh api user -q .login)/ci-workflow"
+git checkout -b "$BRANCH"
 mkdir -p .github/workflows
 ```
 
@@ -115,7 +116,7 @@ Push your branch and open a PR so `ci.yml` runs as required status checks.
 ```bash
 git add .github/workflows/ci.yml
 git commit -m "ci: add lint, test matrix, and build workflow"
-git push -u origin feature/<your-name>/ci-workflow
+git push -u origin "$BRANCH"
 ```
 
 Open a PR and watch the checks:
