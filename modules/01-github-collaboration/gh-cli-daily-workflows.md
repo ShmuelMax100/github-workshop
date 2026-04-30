@@ -9,7 +9,7 @@
 ## Setup
 
 ```bash
-# Install (if not already done — see gh-login-clone-fork.md)
+# Install (if not already done — see START-HERE.md)
 gh auth login
 
 # Set your default repo for the current directory

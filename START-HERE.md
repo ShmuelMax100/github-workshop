@@ -1,6 +1,6 @@
 # Start Here — Workshop Setup
 
-> **TL;DR** — Install `gh`, fork the repo, create your `workshop/<name>` branch, run the test suite, and turn on branch protection on your fork. Ten minutes of setup now saves the whole room time once the session starts.
+> **TL;DR** — Install `gh`, clone the repo, create your `workshop/<name>` branch, and run the test suite. Ten minutes of setup now saves the whole room time once the session starts.
 
 Completethese steps **before the session starts**. It takes about 10 minutes.
 
@@ -34,19 +34,19 @@ gh auth status
 
 ---
 
-## Step 2 — Fork & clone this repo
+## Step 2 — Clone this repo
 
 ```bash
-gh repo fork ShmuelMax100/github-workshop --clone
+gh repo clone ShmuelMax100/github-workshop
 cd github-workshop
 ```
 
-Confirm your remotes:
+Confirm your remote:
 
 ```bash
 git remote -v
-# origin    https://github.com/<your-handle>/github-workshop  ← your fork
-# upstream  https://github.com/ShmuelMax100/github-workshop   ← original
+# origin    https://github.com/ShmuelMax100/github-workshop (fetch)
+# origin    https://github.com/ShmuelMax100/github-workshop (push)
 ```
 
 ---
@@ -76,21 +76,6 @@ test_app.py::test_subtract PASSED
 ...
 9 passed in 0.XXs
 ```
-
----
-
-## Step 5 — Enable branch protection on your fork (for the exercises)
-
-1. Go to your fork on GitHub: `https://github.com/<your-handle>/github-workshop`
-2. **Settings → Branches → Add branch protection rule**
-3. Branch name pattern: `main`
-4. Enable:
-   - ✅ Require a pull request before merging
-   - ✅ Required approvals: 1
-   - ✅ Require status checks to pass before merging
-5. Click **Create**
-
-> You'll feel the protection rules in action during Module 1's exercise.
 
 ---
 

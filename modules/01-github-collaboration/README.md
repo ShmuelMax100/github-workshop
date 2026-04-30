@@ -6,7 +6,6 @@
 
 | Topic | Guide |
 |-------|-------|
-| Login, clone & fork with `gh` | [gh-login-clone-fork.md](./gh-login-clone-fork.md) |
 | GitLab → GitHub terminology mapping | [gitlab-github-mapping.md](./gitlab-github-mapping.md) |
 | PR lifecycle: create, review, approve, merge | [pr-lifecycle.md](./pr-lifecycle.md) |
 | Draft PRs & PR templates | [draft-prs-and-templates.md](./draft-prs-and-templates.md) |

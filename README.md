@@ -8,7 +8,7 @@
 
 ## Before you start
 
-→ **[START-HERE.md](./START-HERE.md)** — fork the repo, install `gh`, run the sample app. Do this before the session.
+→ **[START-HERE.md](./START-HERE.md)** — clone the repo, install `gh`, run the sample app. Do this before the session.
 
 ---
 
@@ -16,7 +16,6 @@
 
 | Topic | Guide |
 |-------|-------|
-| Login, clone & fork with `gh` | [gh-login-clone-fork.md](./modules/01-github-collaboration/gh-login-clone-fork.md) |
 | GitLab → GitHub terminology mapping | [gitlab-github-mapping.md](./modules/01-github-collaboration/gitlab-github-mapping.md) |
 | PR lifecycle: create, review, approve, merge | [pr-lifecycle.md](./modules/01-github-collaboration/pr-lifecycle.md) |
 | Draft PRs & PR templates | [draft-prs-and-templates.md](./modules/01-github-collaboration/draft-prs-and-templates.md) |

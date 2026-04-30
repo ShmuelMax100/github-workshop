@@ -10,7 +10,7 @@ Timing,live demo script, and known stumbling points for each module.
 
 - Share the repo link and `START-HERE.md` **at least 30 minutes before** — participants who skip setup waste everyone's time
 - Ask participants to pair up ahead of time (needed for PR review exercise)
-- Have your own fork ready with branch protection enabled
+- Have the repo cloned locally with branch protection configured on `main`
 - Open these tabs in your browser: repo homepage, Actions tab, a sample PR, branch protection settings
 
 ---
