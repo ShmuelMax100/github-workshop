@@ -67,7 +67,6 @@ inputs:
     default: "3.11"
 
 # TODO ①: Declare this as a composite action
-# Hint: runs.using: "composite"
 
 runs:
   using: "composite"
@@ -75,7 +74,6 @@ runs:
     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
 
     # TODO ②: Set up Python using inputs.python-version
-    # Hint: with: python-version: ${{ inputs.python-version }}
 
     - name: Cache pip
       uses: actions/cache@v4
@@ -85,7 +83,6 @@ runs:
         restore-keys: ${{ runner.os }}-py${{ inputs.python-version }}-
 
     # TODO ③: Add a step that runs `pip install -r requirements.txt`
-    # Hint: composite steps that run shell commands need `shell: bash`
 ```
 
 > 💡 **Why composite actions?** They live in your repo (no marketplace publish needed), are referenced as `uses: ./.github/actions/setup-python-project`, and DRY up workflows. Read more: [reusable-workflows.md → "Composite actions"](../reusable-workflows.md).
@@ -111,8 +108,8 @@ Create `.github/workflows/reusable-validate.yml`:
 ```yaml
 name: Reusable Validate
 
-# TODO ④: Make this workflow callable from other workflows
-# Hint: on: workflow_call: with `inputs:` for python-versions (string, default '["3.11"]')
+# TODO ④: Make this workflow callable from other workflows.
+#         It should accept a `python-versions` input (string, default '["3.11"]').
 
 permissions:
   contents: read
@@ -123,17 +120,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
-      # TODO ⑤: Build a matrix with:
-      #   os: [ubuntu-latest, windows-latest, macos-latest]
-      #   python-version: fromJSON(inputs.python-versions)
-      # Hint: matrix:
-      #         os: [...]
-      #         python-version: ${{ fromJSON(inputs.python-versions) }}
+      # TODO ⑤: Build a matrix that fans out across:
+      #   - os: ubuntu-latest, windows-latest, macos-latest
+      #   - python-version: expanded from the `python-versions` input
 
     steps:
-      # TODO ⑥: Use the composite action from Part A
-      # Hint: uses: ./.github/actions/setup-python-project
-      #       with: python-version: ${{ matrix.python-version }}
+      # TODO ⑥: Use the composite action from Part A,
+      #         passing the matrix Python version through.
 
       - name: Lint
         run: |
@@ -187,18 +180,9 @@ on:
   push:
     tags:
       - "v*"
-  # TODO ⑦: Add workflow_dispatch with a `version` input
-  #   Hint:
-  #     workflow_dispatch:
-  #       inputs:
-  #         version:
-  #           description: 'Release version (e.g., v1.2.3)'
-  #           required: true
-  #           type: string
-  #         prerelease:
-  #           description: 'Mark as pre-release'
-  #           type: boolean
-  #           default: false
+  # TODO ⑦: Add a `workflow_dispatch` trigger with two inputs:
+  #   - version: required string (e.g., 'v1.2.3')
+  #   - prerelease: boolean, default false
 
 permissions:
   contents: write   # required for creating releases
@@ -221,18 +205,15 @@ jobs:
   # ── Job 2: Validate via the reusable workflow ───────────────────────
   validate:
     needs: resolve
-    # TODO ⑧: Call the reusable workflow from Part B
-    # Hint: uses: ./.github/workflows/reusable-validate.yml
-    #       with:
-    #         python-versions: '["3.10","3.11","3.12"]'
+    # TODO ⑧: Call the reusable workflow from Part B,
+    #         passing python-versions: '["3.10","3.11","3.12"]'.
 
   # ── Job 3: Build distribution ───────────────────────────────────────
   build:
     needs: [resolve, validate]
     runs-on: ubuntu-latest
     steps:
-      # TODO ⑨: Use the composite action (default Python is fine)
-      # Hint: uses: ./.github/actions/setup-python-project
+      # TODO ⑨: Use the composite action (default Python is fine).
 
       - name: Build wheel + sdist
         run: |
@@ -256,15 +237,13 @@ jobs:
           name: dist
           path: dist/
 
-      # TODO ⑩: Create a GitHub Release using softprops/action-gh-release@v2
-      # Hint:
-      #   - uses: softprops/action-gh-release@v2
-      #     with:
-      #       tag_name: ${{ needs.resolve.outputs.version }}
-      #       name: Release ${{ needs.resolve.outputs.version }}
-      #       generate_release_notes: true
-      #       prerelease: ${{ inputs.prerelease || false }}
-      #       files: dist/*
+      # TODO ⑩: Create a GitHub Release using a third-party action
+      #         (search the marketplace for one that publishes releases).
+      #         It must:
+      #           - tag the release with the resolved version
+      #           - attach everything in `dist/` as release assets
+      #           - auto-generate release notes
+      #           - honor the `prerelease` dispatch input
 ```
 
 ### 💡 Part C — Hints & Solution
