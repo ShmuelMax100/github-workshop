@@ -2,6 +2,8 @@
 Sample application used in GitHub Workshop CI exercises.
 """
 
+def greet(name: str) -> str:
+    return f"Hello, {name}! Welcome to the GitHub workshop."
 
 def add(a: int, b: int) -> int:
     return a + b
