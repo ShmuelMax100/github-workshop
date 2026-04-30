@@ -1,0 +1,38 @@
+name: Setup Python Project
+description: Checkout, install Python, restore pip cache, install requirements
+
+inputs:
+  python-version:
+    description: Python version to install
+    required: false
+    default: "3.11"
+  install-requirements:
+    description: Whether to run `pip install -r requirements.txt`
+    required: false
+    default: "true"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+
+    - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b  # v5.3.0
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c6158d  # v4.2.0
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-py${{ inputs.python-version }}-${{ hashFiles('requirements.txt') }}
+        restore-keys: ${{ runner.os }}-py${{ inputs.python-version }}-
+
+    - name: Install requirements
+      if: inputs.install-requirements == 'true'
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then
+          pip install -r requirements.txt
+        else
+          echo "No requirements.txt found, skipping."
+        fi

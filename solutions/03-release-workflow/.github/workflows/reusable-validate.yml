@@ -1,0 +1,51 @@
+name: Reusable Validate
+
+on:
+  workflow_call:
+    inputs:
+      python-versions:
+        description: 'JSON array of Python versions, e.g. ["3.10","3.11","3.12"]'
+        type: string
+        required: false
+        default: '["3.11"]'
+      os-list:
+        description: 'JSON array of runner OSes'
+        type: string
+        required: false
+        default: '["ubuntu-latest","windows-latest","macos-latest"]'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate (${{ matrix.os }} / py${{ matrix.python-version }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ${{ fromJSON(inputs.os-list) }}
+        python-version: ${{ fromJSON(inputs.python-versions) }}
+
+    steps:
+      - uses: ./.github/actions/setup-python-project
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Lint
+        shell: bash
+        run: |
+          pip install ruff
+          ruff check src/
+
+      - name: Test
+        shell: bash
+        run: pytest src/ -v --junitxml=test-results-${{ matrix.os }}-${{ matrix.python-version }}.xml
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08  # v4.6.0
+        with:
+          name: test-results-${{ matrix.os }}-py${{ matrix.python-version }}
+          path: test-results-*.xml
+          retention-days: 14
