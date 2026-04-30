@@ -194,10 +194,6 @@ Or use the UI: click **Squash and merge** → **Confirm**.
 git checkout main
 git fetch origin
 git reset --hard origin/main          # discard the now-obsolete local commits
-<<<<<<< Updated upstream
-=======
-git branch -d "$BRANCH" 2>/dev/null  # only if `gh pr merge --delete-branch` didn't already do it
->>>>>>> Stashed changes
 ```
 
 ---
