@@ -1,6 +1,6 @@
 # GitHub Workshop
 
-> **TL;DR** — A 3.5-hour hands-on workshop that translates GitLab + Jenkins muscle memory into GitHub + Actions: PR lifecycle, branch protection, workflow YAML, secrets, environments, and debugging. Start with `START-HERE.md`, then work through the three modules in order.
+> **TL;DR** — Dive into GitHub + Actions: PR lifecycle, branch protection, workflow YAML, secrets, environments, and debugging. Start with `START-HERE.md`, then work through the three modules in order.
 
 > **Duration:**3.5 hours &nbsp;|&nbsp; **Format:** Hands-on &nbsp;|&nbsp; **Audience:** Developers transitioning from GitLab & Jenkins
 
