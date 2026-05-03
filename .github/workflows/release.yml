@@ -53,9 +53,10 @@ jobs:
           python-version: "3.11"
 
       - name: Build wheel + sdist
+        working-directory: src
         run: |
           pip install build
-          python -m build
+          python -m build --outdir ../dist
 
       - name: Upload dist artifact
         uses: actions/upload-artifact@v4
