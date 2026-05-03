@@ -1,0 +1,43 @@
+name: Reusable Validate
+
+on:
+  workflow_call:                          # this makes it reusable
+    inputs:
+      python-versions:
+        description: 'JSON array of Python versions, e.g. ["3.10","3.11","3.12"]'
+        type: string                 # workflow_call inputs only support string/boolean/number
+        required: false
+        default: '["3.11"]'          # default is the string '["3.11"]', not a YAML list
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate (${{ matrix.os }} / py${{ matrix.python-version }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pytest
+
+      - name: Lint
+        run: |
+          pip install ruff
+          ruff check src/
+
+      - name: Test
+        run: pytest src/ --junitxml=test-results-${{ matrix.os }}-${{ matrix.python-version }}.xml
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.os }}-${{ matrix.python-version }}
+          path: test-results-*.xml
