@@ -267,7 +267,12 @@ git add .github/
 git commit -m "ci: add release pipeline (dispatch + tags + reusable + matrix)"
 git push -u origin "$BRANCH"
 gh pr create --title "ci: add release workflow" --body "Adds release.yml with dispatch + reusable + composite."
-# After merge to main:
+
+# Merge the PR (via the GitHub UI, or with the CLI below):
+gh pr merge --squash --delete-branch
+git checkout main && git pull
+
+# Now the workflow exists on the default branch — dispatch it:
 gh workflow run release.yml -f version=v0.1.0 -f prerelease=true
 gh run watch
 ```
