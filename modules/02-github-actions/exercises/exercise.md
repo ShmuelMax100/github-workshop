@@ -130,10 +130,7 @@ git push -u origin "$BRANCH"
 Open a PR and watch the checks:
 
 ```bash
-gh pr create \
-  --title "ci: add CI workflow" \
-  --body "Adds ci.yml (lint, test matrix, build)."
-
+gh pr create --title "ci: add CI workflow" --body "Adds ci.yml (lint, test matrix, build)."
 gh pr checks --watch
 ```
 
