@@ -27,7 +27,7 @@ gh api repos/actions/checkout/git/refs/tags/v4 --jq '.object.sha'
 npx pin-github-action .github/workflows/ci.yml
 ```
 
-### Example: SHA-pinned third-party action — publish a GitHub Release
+### Example: third-party action — publish a GitHub Release
 
 Copy this whole step into your release job. It tags the release with the resolved
 version, attaches every file under `dist/` as an asset, auto-generates notes, and
@@ -35,7 +35,7 @@ honors a `prerelease` workflow input. The job needs `permissions: contents: writ
 
 ```yaml
 - name: Create GitHub Release
-  uses: softprops/action-gh-release@c95fe1489396fe8a9eb87c0abf8aa5b2ef267fda  # v2.2.1
+  uses: softprops/action-gh-release@v2
   with:
     tag_name: ${{ inputs.version }}
     name: Release ${{ inputs.version }}
