@@ -6,9 +6,6 @@ Sample application used in GitHub Workshop CI exercises.
 def add(a: int, b: int) -> int:
     return a + b
 
-def greet(name: str) -> str:
-    return f"Hello, {name}! Welcome to the GitHub workshop."
-    
 
 def subtract(a: int, b: int) -> int:
     return a - b
