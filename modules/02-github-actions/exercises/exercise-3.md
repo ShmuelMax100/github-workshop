@@ -40,6 +40,8 @@
 
 ## Setup
 
+**Bash / macOS / Linux / Git Bash:**
+
 ```bash
 git checkout main && git pull
 BRANCH="feature/$(whoami)/release-workflow"
@@ -47,6 +49,22 @@ git checkout -b "$BRANCH"
 mkdir -p .github/actions/setup-python-project
 mkdir -p .github/workflows
 ```
+
+**Windows PowerShell:**
+
+```powershell
+git checkout main; git pull
+$BRANCH = "feature/$env:USERNAME/release-workflow"
+git checkout -b $BRANCH
+New-Item -ItemType Directory -Force -Path .github/actions/setup-python-project | Out-Null
+New-Item -ItemType Directory -Force -Path .github/workflows | Out-Null
+```
+
+> 💡 Keep the `$BRANCH` variable in the same shell session for the rest of the
+> exercise — later commands (`git push -u origin "$BRANCH"`,
+> `gh workflow run release.yml --ref "$BRANCH" ...`) reference it. If you open a
+> new terminal, re-run the `BRANCH=...` (bash) or `$BRANCH = ...` (PowerShell)
+> line first.
 
 ---
 
