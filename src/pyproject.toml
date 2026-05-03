@@ -1,12 +1,15 @@
 [build-system]
 requires = ["setuptools>=68", "wheel"]
-build-backend = "setuptools.backends.legacy:build"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "github-workshop-app"
 version = "0.1.0"
 description = "Sample app for the GitHub Workshop CI exercises"
 requires-python = ">=3.10"
+
+[tool.setuptools]
+py-modules = ["app"]
 
 [tool.ruff]
 line-length = 100
