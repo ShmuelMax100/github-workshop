@@ -100,12 +100,12 @@ Read the linked section first. Open the solution (`solutions/02-ci-workflow/`) o
 
 | # | TODO | Concept | Read this |
 |---|---|---|---|
-| ① | Set default permissions to read-only | `permissions:` key at workflow level | [10-permissions.md → "The `permissions:` key"](../10-permissions.md?plain=1#L34) |
-| ② | Set up Python 3.11 | Using a third-party action via `uses:` | [core-concepts.md → "Steps"](../core-concepts.md?plain=1#L140) |
-| ③ | Add a matrix for python versions | `strategy: matrix:` | [caching-and-matrix.md → "Basic matrix"](../caching-and-matrix.md?plain=1#L116) |
-| ④ | Use the matrix value in setup-python | `${{ matrix.<key> }}` reference | [caching-and-matrix.md → "Basic matrix"](../caching-and-matrix.md?plain=1#L116) |
-| ⑤ | Upload artifact even on failure | `actions/upload-artifact` + `if: always()` | [03-operations-debugging/artifacts.md → "Upload even on failure"](../../03-operations-debugging/artifacts.md?plain=1#L24) |
-| ⑥ | Make `build` wait for `lint` AND `test` | `needs: [lint, test]` | [job-orchestration.md → "`needs:`"](../job-orchestration.md?plain=1#L21) |
+| ① | Set default permissions to read-only | `permissions:` key at workflow level | <a href="../10-permissions.md?plain=1#L34" target="_blank" rel="noopener">10-permissions.md → "The <code>permissions:</code> key"</a> |
+| ② | Set up Python 3.11 | Using a third-party action via `uses:` | <a href="../core-concepts.md?plain=1#L150" target="_blank" rel="noopener">core-concepts.md → "Steps"</a> |
+| ③ | Add a matrix for python versions | `strategy: matrix:` | <a href="../caching-and-matrix.md?plain=1#L116" target="_blank" rel="noopener">caching-and-matrix.md → "Basic matrix"</a> |
+| ④ | Use the matrix value in setup-python | `${{ matrix.<key> }}` reference | <a href="../caching-and-matrix.md?plain=1#L116" target="_blank" rel="noopener">caching-and-matrix.md → "Basic matrix"</a> |
+| ⑤ | Upload artifact even on failure | `actions/upload-artifact` + `if: always()` | <a href="../../03-operations-debugging/artifacts.md?plain=1#L24" target="_blank" rel="noopener">03-operations-debugging/artifacts.md → "Upload even on failure"</a> |
+| ⑥ | Make `build` wait for `lint` AND `test` | `needs: [lint, test]` | <a href="../job-orchestration.md?plain=1#L21" target="_blank" rel="noopener">job-orchestration.md → "<code>needs:</code>"</a> |
 
 ---
 
