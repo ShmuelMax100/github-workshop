@@ -188,7 +188,7 @@ jobs:
 
 | # | TODO | Concept | Read this |
 |---|---|---|---|
-| ④ | `on: workflow_call:` | Reusable workflow trigger | [reusable-workflows.md → "Reusable Workflows"](../reusable-workflows.md?plain=1#L30) |
+| ④ | `on: workflow_call:` with `python-versions` input | Reusable workflow trigger + the exact input shape | [caching-and-matrix.md → `workflow_call` inputs block (copy this)](../caching-and-matrix.md?plain=1#L140) · [reusable-workflows.md → general `workflow_call` example](../reusable-workflows.md?plain=1#L30) |
 | ⑤ | `fromJSON()` to expand matrix | Dynamic matrix from input string | [caching-and-matrix.md → "Dynamic matrix from a workflow input"](../caching-and-matrix.md?plain=1#L154) |
 | ⑥a | `actions/checkout@v4` first | Required before any local `uses: ./...` | [core-concepts.md → "Run on Pushes & PRs" / first checkout step](../core-concepts.md?plain=1#L147) |
 | ⑥b | Local action via `uses: ./path` | Calling a composite action | [reusable-workflows.md → "Use the composite action"](../reusable-workflows.md?plain=1#L150) |
