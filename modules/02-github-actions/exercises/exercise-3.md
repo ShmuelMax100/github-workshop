@@ -124,8 +124,13 @@ jobs:
       #   - python-version: expanded from the `python-versions` input
 
     steps:
-      # TODO ⑥: Use the composite action from Part A,
+      # TODO ⑥: Use the composite action from Part A as the FIRST step,
       #         passing the matrix Python version through.
+      #         The composite already does: checkout + setup-python + pip cache
+      #         + `pip install -r requirements.txt`. Do NOT add a separate
+      #         `actions/checkout` or `actions/setup-python` step — the composite
+      #         covers both. After it runs, `pytest` and `ruff` are on PATH
+      #         (provided they're listed in requirements.txt — see note below).
 
       - name: Lint
         run: |
@@ -142,6 +147,8 @@ jobs:
           name: test-results-${{ matrix.os }}-${{ matrix.python-version }}
           path: test-results-*.xml
 ```
+
+> ⚠️ **Make sure `requirements.txt` lists `pytest`** (and ideally `ruff`). The composite action installs from `requirements.txt`; if pytest isn't there, the `Test` step will fail with `pytest: command not found` (exit code 127).
 
 > 💡 **Composite action vs reusable workflow:**
 > | | Composite action | Reusable workflow |
