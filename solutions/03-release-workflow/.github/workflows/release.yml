@@ -55,7 +55,8 @@ jobs:
       - name: Build wheel + sdist
         run: |
           pip install build
-          python -m build
+          cd src
+          python -m build --outdir ../dist
 
       - name: Upload dist artifact
         uses: actions/upload-artifact@v4
