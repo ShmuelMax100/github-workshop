@@ -22,7 +22,7 @@ jobs:
         python-version: ["3.11", "3.12"]
 
     steps:
-      - uses: actions/setup-python@v5
+      - uses: ./.github/actions/setup-python-project
         with:
           python-version: ${{ matrix.python-version }}
       - run: pytest
