@@ -4,6 +4,7 @@ Used in workshop exercises to demonstrate CI test runs and debugging.
 """
 
 import pytest
+
 from app import add, subtract, multiply, divide, greet, fibonacci
 
 
