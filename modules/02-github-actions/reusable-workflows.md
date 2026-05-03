@@ -106,7 +106,7 @@ A composite action packages a sequence of steps into a single reusable `uses:` c
 ### 1. Create the action
 
 ```yaml
-# .github/actions/setup-python-env/action.yml
+# .github/actions/setup-python-project/action.yml
 name: "Setup Python Environment"
 description: "Install Python, restore pip cache, install dependencies"
 
@@ -147,7 +147,7 @@ runs:
 steps:
   - uses: actions/checkout@v4
 
-  - uses: ./.github/actions/setup-python-env      # local composite action
+  - uses: ./.github/actions/setup-python-project  # local composite action
     with:
       python-version: "3.12"
 

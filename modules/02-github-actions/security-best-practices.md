@@ -35,13 +35,13 @@ honors a `prerelease` workflow input. The job needs `permissions: contents: writ
 
 ```yaml
 - name: Create GitHub Release
-  uses: softprops/action-gh-release@v2
+  uses: ncipollo/release-action@v1
   with:
-    tag_name: ${{ inputs.version }}
+    tag: ${{ inputs.version }}
     name: Release ${{ inputs.version }}
-    generate_release_notes: true                # auto-generate from PR titles
+    artifacts: dist/*                           # attach build artifacts
+    generateReleaseNotes: true                  # auto-generate from PR titles
     prerelease: ${{ inputs.prerelease }}        # honor the dispatch input
-    files: dist/*                               # attach build artifacts
 ```
 
 ---
