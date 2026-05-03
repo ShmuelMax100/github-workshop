@@ -10,9 +10,17 @@
 ## Setup
 
 ```bash
+# bash / macOS / Linux / Git Bash
 BRANCH="feature/$(whoami)/ci-workflow"
 git checkout -b "$BRANCH"
 mkdir -p .github/workflows
+```
+
+```powershell
+# Windows PowerShell
+$BRANCH = "feature/$env:USERNAME/ci-workflow"
+git checkout -b $BRANCH
+New-Item -ItemType Directory -Force -Path .github/workflows | Out-Null
 ```
 
 ---
