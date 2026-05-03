@@ -1,5 +1,5 @@
 name: Setup Python Project
-description: Checkout, install Python, restore pip cache, install requirements
+description: Install Python, restore pip cache, install requirements. NOTE — caller must `actions/checkout` BEFORE using this composite (local actions need action.yml on disk first).
 
 inputs:
   python-version:
@@ -14,7 +14,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+    # Note: no `actions/checkout` here on purpose — the caller workflow must check out
+    # the repo before referencing this composite, otherwise GitHub can't find action.yml.
 
     - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b  # v5.3.0
       with:
