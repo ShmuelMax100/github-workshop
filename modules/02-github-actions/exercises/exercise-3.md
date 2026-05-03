@@ -124,13 +124,19 @@ jobs:
       #   - python-version: expanded from the `python-versions` input
 
     steps:
-      # TODO ⑥: Use the composite action from Part A as the FIRST step,
-      #         passing the matrix Python version through.
-      #         The composite already does: checkout + setup-python + pip cache
-      #         + `pip install -r requirements.txt`. Do NOT add a separate
-      #         `actions/checkout` or `actions/setup-python` step — the composite
-      #         covers both. After it runs, `pytest` and `ruff` are on PATH
-      #         (provided they're listed in requirements.txt — see note below).
+      # TODO ⑥a: Add `actions/checkout@v4` as the FIRST step.
+      #          This is required so the runner has the local composite action
+      #          (`./.github/actions/setup-python-project`) on disk before the
+      #          next step tries to load its `action.yml`. Without checkout,
+      #          you'll see: "Can't find 'action.yml' under
+      #          '.github/actions/setup-python-project'."
+
+      # TODO ⑥b: Use the composite action from Part A,
+      #          passing the matrix Python version through.
+      #          The composite does: setup-python + pip cache
+      #          + `pip install -r requirements.txt`. After it runs,
+      #          `pytest` and `ruff` are on PATH (provided they're listed
+      #          in requirements.txt — see note below).
 
       - name: Lint
         run: |
@@ -148,7 +154,9 @@ jobs:
           path: test-results-*.xml
 ```
 
-> ⚠️ **Make sure `requirements.txt` lists `pytest`** (and ideally `ruff`). The composite action installs from `requirements.txt`; if pytest isn't there, the `Test` step will fail with `pytest: command not found` (exit code 127).
+> ⚠️ **`actions/checkout` must precede a local composite action.** Even if your composite includes a `checkout` step internally, the runner can't *load* the composite's `action.yml` until the repo is on disk. So the **caller workflow** (this one) must run `actions/checkout` first. This is the most common stumble with local composites.
+
+> ⚠️ **Make sure `requirements.txt` lists `pytest`** (and ideally `ruff`). The composite installs from `requirements.txt`; if pytest isn't there, the `Test` step fails with `pytest: command not found` (exit code 127).
 
 > 💡 **Composite action vs reusable workflow:**
 > | | Composite action | Reusable workflow |
@@ -164,7 +172,8 @@ jobs:
 |---|---|---|---|
 | ④ | `on: workflow_call:` | Reusable workflow trigger | [reusable-workflows.md → "Reusable Workflows"](../reusable-workflows.md?plain=1#L30) |
 | ⑤ | `fromJSON()` to expand matrix | Dynamic matrix from input string | [caching-and-matrix.md → "Dynamic matrix from a workflow input"](../caching-and-matrix.md?plain=1#L154) |
-| ⑥ | Local action via `uses: ./path` | Calling a composite action | [reusable-workflows.md → "Use the composite action"](../reusable-workflows.md?plain=1#L150) |
+| ⑥a | `actions/checkout@v4` first | Required before any local `uses: ./...` | [core-concepts.md → "Run on Pushes & PRs" / first checkout step](../core-concepts.md?plain=1#L147) |
+| ⑥b | Local action via `uses: ./path` | Calling a composite action | [reusable-workflows.md → "Use the composite action"](../reusable-workflows.md?plain=1#L150) |
 
 → Solution: [solutions/03-release-workflow/.github/workflows/reusable-validate.yml](../../../solutions/03-release-workflow/.github/workflows/reusable-validate.yml)
 
