@@ -252,7 +252,7 @@ jobs:
 | ⑦ | `workflow_dispatch` inputs | Manual triggers | [manual-triggers.md → `workflow_dispatch:` snippet](../manual-triggers.md?plain=1#L23) |
 | ⑧ | `jobs.<id>.uses:` | Calling a reusable workflow | [reusable-workflows.md → `uses: ./.github/workflows/deploy.yml` line](../reusable-workflows.md?plain=1#L75) |
 | ⑨ | Reusing the composite action | DRY principle | [reusable-workflows.md → `uses: ./.github/actions/...` line](../reusable-workflows.md?plain=1#L150) |
-| ⑩ | Third-party action via SHA-pinned `uses:` | Marketplace actions | [marketplace-actions.md → "Example: publish a GitHub Release"](../marketplace-actions.md?plain=1#L54) · [security-best-practices.md → "SHA Pin Third-Party Actions"](../security-best-practices.md?plain=1#L16) |
+| ⑩ | Third-party action via SHA-pinned `uses:` | Marketplace actions | [marketplace-actions.md → `Create GitHub Release` step (copy this block)](../marketplace-actions.md?plain=1#L71) · [security-best-practices.md → SHA-pin example](../security-best-practices.md?plain=1#L16) |
 
 → Solution: [solutions/03-release-workflow/.github/workflows/release.yml](../../../solutions/03-release-workflow/.github/workflows/release.yml)
 
