@@ -1,4 +1,63 @@
+"""Generate slides.md mirroring GitHub-Workshop.pptx (71 slides)."""
+
+REPO_TOUR = [
+    (0.8, 11.02, "Code", "Browse files, branches, and history. Your repo's home — like the project root in GitLab."),
+    (8.6, 11.02, "Issues", "Track bugs, features, and tasks. Replaces Jira tickets for many teams — built into the repo."),
+    (18.4, 11.02, "Pull Requests", "Code review and merge gate. The heart of GitHub Flow — every change ships through a PR."),
+    (30.1, 11.02, "Agents", "GitHub's new AI coding agent — assigns issues, opens PRs autonomously. Optional, paid feature."),
+    (38.3, 11.02, "Actions", "CI/CD workflows. Defined in YAML under .github/workflows/ — this is what we'll build today."),
+    (46.9, 11.02, "Projects", "Kanban boards / tables linked to Issues & PRs. Lightweight project management inside GitHub."),
+    (53.9, 11.02, "Wiki", "Free-form documentation pages. Markdown with its own git history — separate from the main repo."),
+    (63.7, 11.02, "Security", "Dependabot, secret scanning, code scanning, advisories. Your security command center."),
+    (76.2, 11.02, "Insights", "Traffic, contributors, dependency graph, network. Charts about how the repo is being used."),
+    (85.6, 11.02, "Settings", "Branch protection, collaborators, secrets, webhooks, Actions permissions. Admins only."),
+    (55.5, 21.33, "Pin", "Pin this repo to your profile so visitors see it first. Vanity feature — useful for portfolios."),
+    (63.8, 21.33, "Watch", "Subscribe to repo activity — issues, PRs, releases. Choose 'all activity', 'only mentions', etc."),
+    (75.6, 21.33, "Fork", "Make your own copy of the repo to propose changes. The starting point for OSS contribution."),
+    (87.5, 21.33, "Star ⭐", "Bookmark a repo to find it again later. Public stars also signal popularity."),
+    (70.7, 31.11, "About", "Description, website link, topics. Edit via the gear icon — make it discoverable."),
+    (72.7, 46.22, "Readme", "Quick-link to the project's README rendered below. The front page of your repo."),
+    (72.7, 50.67, "Activity", "Recent events on the repo — commits, releases, issues. Your repo's pulse."),
+    (71.9, 72.36, "Releases", "Tagged versions with notes & artifacts. Often produced automatically by a release workflow."),
+]
+
+PR_TOUR = [
+    (18.38, 33.23, "Conversation", "The unified PR thread — description, comments, reviews, and event log."),
+    (26.03, 33.23, "Commits", "Browse the individual commits in this PR. Useful for stacked-diff reviews."),
+    (32.75, 33.23, "Checks", "Status of every CI run for this PR: tests, linters, security scans, deploys."),
+    (40.15, 33.23, "Files changed", "The full diff. Leave inline comments, suggested changes, and approvals here."),
+    (57.45, 29.38, "Reviewers", "Request review from people or teams. CODEOWNERS auto-fills here."),
+    (57.45, 36.53, "Assignees", "Who is responsible for landing this PR. Often the author, sometimes a shepherd."),
+    (57.45, 43.60, "Labels", "Categorise the PR: bug, feature, area/api, needs-triage. Drives filters & automation."),
+    (57.45, 50.75, "Projects", "Add to a GitHub Project board — Kanban, roadmap, or sprint tracking."),
+    (57.45, 57.82, "Milestone", "Group PRs by release or iteration (e.g. v1.2.0, Sprint 14)."),
+    (57.45, 64.98, "Development", 'Link issues. "Closes #123" in the description auto-closes them on merge.'),
+]
+
+
+def tour_slide(image, x, y, term, desc):
+    # The hand emoji is positioned relative to the image, not the whole slide.
+    # Image takes ~85.5% of slide height in original; on web we let it size naturally.
+    return f"""---
+class: tour-slide
 ---
+
+<div class="tour">
+  <div class="tour-frame">
+    <img src="/img/{image}" class="tour-img" />
+    <div class="tour-hand" style="left: {x}%; top: {y / 0.855:.2f}%;">👆</div>
+  </div>
+  <div class="tour-caption">
+    <strong>{term}</strong> &mdash; {desc}
+  </div>
+</div>
+"""
+
+
+SLIDES = []
+
+# 1. Title
+SLIDES.append("""---
 theme: seriph
 title: GitHub Workshop
 info: |
@@ -26,8 +85,10 @@ From **GitLab & Jenkins** to **GitHub-Native Development**
 <div class="abs-br m-6 text-sm opacity-60">
   Shmuel Max · Marina Marenkov
 </div>
+""")
 
----
+# 2. Shmuel
+SLIDES.append("""---
 layout: two-cols
 ---
 
@@ -48,8 +109,10 @@ layout: two-cols
 ::right::
 
 <img src="/img/shmuel.jpg" class="rounded-2xl shadow-2xl mx-auto mt-12" style="max-height: 360px;" />
+""")
 
----
+# 3. Marina
+SLIDES.append("""---
 layout: two-cols
 ---
 
@@ -71,8 +134,10 @@ Specialist Sales — OPEX, Israel
 ::right::
 
 <img src="/img/marina.jpg" class="rounded-2xl shadow-2xl mx-auto mt-12" style="max-height: 360px;" />
+""")
 
----
+# 4. Agenda
+SLIDES.append("""---
 ---
 
 # Agenda
@@ -120,8 +185,10 @@ Format: Hands-on · Audience: Developers transitioning from GitLab & Jenkins
 </div>
 
 </div>
+""")
 
----
+# 5. Before we start
+SLIDES.append("""---
 layout: center
 ---
 
@@ -152,260 +219,14 @@ gh auth status && git --version && gh --version
 <div class="text-center pt-2 text-sm opacity-70">
 Full setup guide → <code>START-HERE.md</code>
 </div>
+""")
 
----
-class: tour-slide
----
+# 6-23: Repo tour
+for x, y, term, desc in REPO_TOUR:
+    SLIDES.append(tour_slide("repo-tour.png", x, y, term, desc))
 
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 0.8%; top: 12.89%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Code</strong> &mdash; Browse files, branches, and history. Your repo's home — like the project root in GitLab.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 8.6%; top: 12.89%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Issues</strong> &mdash; Track bugs, features, and tasks. Replaces Jira tickets for many teams — built into the repo.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 18.4%; top: 12.89%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Pull Requests</strong> &mdash; Code review and merge gate. The heart of GitHub Flow — every change ships through a PR.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 30.1%; top: 12.89%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Agents</strong> &mdash; GitHub's new AI coding agent — assigns issues, opens PRs autonomously. Optional, paid feature.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 38.3%; top: 12.89%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Actions</strong> &mdash; CI/CD workflows. Defined in YAML under .github/workflows/ — this is what we'll build today.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 46.9%; top: 12.89%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Projects</strong> &mdash; Kanban boards / tables linked to Issues & PRs. Lightweight project management inside GitHub.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 53.9%; top: 12.89%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Wiki</strong> &mdash; Free-form documentation pages. Markdown with its own git history — separate from the main repo.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 63.7%; top: 12.89%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Security</strong> &mdash; Dependabot, secret scanning, code scanning, advisories. Your security command center.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 76.2%; top: 12.89%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Insights</strong> &mdash; Traffic, contributors, dependency graph, network. Charts about how the repo is being used.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 85.6%; top: 12.89%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Settings</strong> &mdash; Branch protection, collaborators, secrets, webhooks, Actions permissions. Admins only.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 55.5%; top: 24.95%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Pin</strong> &mdash; Pin this repo to your profile so visitors see it first. Vanity feature — useful for portfolios.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 63.8%; top: 24.95%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Watch</strong> &mdash; Subscribe to repo activity — issues, PRs, releases. Choose 'all activity', 'only mentions', etc.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 75.6%; top: 24.95%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Fork</strong> &mdash; Make your own copy of the repo to propose changes. The starting point for OSS contribution.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 87.5%; top: 24.95%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Star ⭐</strong> &mdash; Bookmark a repo to find it again later. Public stars also signal popularity.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 70.7%; top: 36.39%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>About</strong> &mdash; Description, website link, topics. Edit via the gear icon — make it discoverable.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 72.7%; top: 54.06%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Readme</strong> &mdash; Quick-link to the project's README rendered below. The front page of your repo.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 72.7%; top: 59.26%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Activity</strong> &mdash; Recent events on the repo — commits, releases, issues. Your repo's pulse.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/repo-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 71.9%; top: 84.63%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Releases</strong> &mdash; Tagged versions with notes & artifacts. Often produced automatically by a release workflow.
-  </div>
-</div>
-
----
+# 24. Module 1 divider
+SLIDES.append("""---
 layout: section
 ---
 
@@ -414,8 +235,10 @@ layout: section
 # GitHub Collaboration<br>& CI Flow
 
 <div class="text-lg opacity-70 pt-4">⏱️ 60 minutes</div>
+""")
 
----
+# 25. gh login/clone/fork
+SLIDES.append("""---
 ---
 
 # Login, Clone & Fork with `gh`
@@ -464,8 +287,10 @@ gh repo sync owner/repo
 
 </div>
 </div>
+""")
 
----
+# 26. GitLab→GitHub mapping (use plain backticks, no Vue {{ }})
+SLIDES.append("""---
 ---
 
 # GitLab → GitHub: Same Concepts, New Names
@@ -481,8 +306,10 @@ gh repo sync owner/repo
 | Group / Project | Organization / Repository |
 | CI/CD Variables (masked) | Secrets — `secrets.NAME` |
 | CI/CD Variables (plain) | Variables — `vars.NAME` |
+""")
 
----
+# 27. PR Lifecycle
+SLIDES.append("""---
 ---
 
 # Pull Request Lifecycle
@@ -503,148 +330,14 @@ flowchart LR
 Direct pushes to `main` are blocked · At least 1 approval required · All CI checks must pass before merge
 
 </div>
+""")
 
----
-class: tour-slide
----
+# 28-37: PR tour
+for x, y, term, desc in PR_TOUR:
+    SLIDES.append(tour_slide("pr-tour.png", x, y, term, desc))
 
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/pr-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 18.38%; top: 38.87%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Conversation</strong> &mdash; The unified PR thread — description, comments, reviews, and event log.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/pr-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 26.03%; top: 38.87%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Commits</strong> &mdash; Browse the individual commits in this PR. Useful for stacked-diff reviews.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/pr-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 32.75%; top: 38.87%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Checks</strong> &mdash; Status of every CI run for this PR: tests, linters, security scans, deploys.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/pr-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 40.15%; top: 38.87%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Files changed</strong> &mdash; The full diff. Leave inline comments, suggested changes, and approvals here.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/pr-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 57.45%; top: 34.36%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Reviewers</strong> &mdash; Request review from people or teams. CODEOWNERS auto-fills here.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/pr-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 57.45%; top: 42.73%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Assignees</strong> &mdash; Who is responsible for landing this PR. Often the author, sometimes a shepherd.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/pr-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 57.45%; top: 50.99%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Labels</strong> &mdash; Categorise the PR: bug, feature, area/api, needs-triage. Drives filters & automation.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/pr-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 57.45%; top: 59.36%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Projects</strong> &mdash; Add to a GitHub Project board — Kanban, roadmap, or sprint tracking.
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/pr-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 57.45%; top: 67.63%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Milestone</strong> &mdash; Group PRs by release or iteration (e.g. v1.2.0, Sprint 14).
-  </div>
-</div>
-
----
-class: tour-slide
----
-
-<div class="tour">
-  <div class="tour-frame">
-    <img src="/img/pr-tour.png" class="tour-img" />
-    <div class="tour-hand" style="left: 57.45%; top: 76.00%;">👆</div>
-  </div>
-  <div class="tour-caption">
-    <strong>Development</strong> &mdash; Link issues. "Closes #123" in the description auto-closes them on merge.
-  </div>
-</div>
-
----
+# 38. Draft PRs & Templates
+SLIDES.append("""---
 ---
 
 # Draft PRs & PR Templates
@@ -680,8 +373,10 @@ gh pr ready          # when done
 </div>
 
 </div>
+""")
 
----
+# 39. gh CLI daily driver
+SLIDES.append("""---
 ---
 
 # GitHub CLI — Your Daily Driver
@@ -719,8 +414,10 @@ gh repo clone owner/repo
 </div>
 
 </div>
+""")
 
----
+# 40. Branch Protection
+SLIDES.append("""---
 ---
 
 # Branch Protection Rules
@@ -746,8 +443,10 @@ gh repo clone owner/repo
 <div class="pt-6 text-sm opacity-70">
 📍 <strong>Settings</strong> → <strong>Branches</strong> → <strong>Add branch protection rule</strong>
 </div>
+""")
 
----
+# 41. Repo Lifecycle
+SLIDES.append("""---
 ---
 
 # Repository Lifecycle
@@ -782,8 +481,10 @@ src/                    @org/dev-leads
 </div>
 
 </div>
+""")
 
----
+# 42. UI Power Shortcuts
+SLIDES.append("""---
 ---
 
 # GitHub UI — Power Shortcuts
@@ -798,8 +499,10 @@ src/                    @org/dev-leads
 | VS Code in browser | Press <kbd>.</kbd> (period) in any repo |
 | Compare branches | `/compare/main...my-branch` in URL |
 | Inline code suggestion | ± icon in a review comment |
+""")
 
----
+# 43. Module 1 hands-on
+SLIDES.append("""---
 layout: center
 class: text-center
 ---
@@ -824,8 +527,10 @@ class: text-center
 <div class="pt-8 text-sm opacity-70">
 ⏱️ ~25 min  ·  <code>modules/01-github-collaboration/exercises/exercise.md</code>
 </div>
+""")
 
----
+# 44. Module 2 divider
+SLIDES.append("""---
 layout: section
 ---
 
@@ -834,8 +539,10 @@ layout: section
 # GitHub Actions<br>Deep Dive
 
 <div class="text-lg opacity-70 pt-4">⏱️ 80 minutes</div>
+""")
 
----
+# 45. Jenkins → Actions
+SLIDES.append("""---
 ---
 
 # Jenkins → GitHub Actions
@@ -851,8 +558,10 @@ layout: section
 | `parallel { ... }` | jobs without `needs:` (parallel by default) |
 | `post { always { ... } }` | `if: always()` |
 | Shared Library | Reusable Workflow / Composite Action |
+""")
 
----
+# 46. Actions core concepts
+SLIDES.append("""---
 ---
 
 # GitHub Actions — Core Concepts
@@ -872,8 +581,10 @@ jobs:                            # 🧱 JOBS — parallel by default
 
       - run: pytest src/             # ⚡ COMMAND — any shell script
 ```
+""")
 
----
+# 47. Permissions
+SLIDES.append("""---
 ---
 
 # Permissions — Least-Privilege by Default
@@ -919,8 +630,10 @@ jobs:
 <div class="pt-2 text-xs opacity-70">
 🧭 Rule of thumb: <strong>start read-only</strong>, grant write per-job, prefer OIDC over PATs.
 </div>
+""")
 
----
+# 48. Secrets / Vars / Env
+SLIDES.append("""---
 ---
 
 # Secrets, Variables & Environments
@@ -965,8 +678,10 @@ jobs:
 <div class="pt-3 text-xs opacity-70 text-center">
 More specific scope overrides broader → <strong>Environment > Repository > Organization</strong>
 </div>
+""")
 
----
+# 49. Environments approvals
+SLIDES.append("""---
 ---
 
 # Environments — Approvals & Protection Rules
@@ -1012,8 +727,10 @@ jobs:
 <div class="pt-2 text-xs opacity-70 text-center">
 Job pauses on Reviewers gate until approved in UI.
 </div>
+""")
 
----
+# 50. Job orchestration
+SLIDES.append("""---
 ---
 
 # Job Orchestration
@@ -1048,8 +765,10 @@ flowchart LR
 </div>
 
 </div>
+""")
 
----
+# 51. Passing data
+SLIDES.append("""---
 ---
 
 # Passing Data Between Steps & Jobs
@@ -1071,8 +790,10 @@ flowchart LR
   run: echo "tag=v1.2.${{ github.run_number }}" >> $GITHUB_OUTPUT
 - run: echo "${{ steps.ver.outputs.tag }}"
 ```
+""")
 
----
+# 52. Reusable workflows / composite
+SLIDES.append("""---
 ---
 
 # Reusable Workflows & Composite Actions
@@ -1112,8 +833,10 @@ jobs:
       environment: staging
     secrets: inherit
 ```
+""")
 
----
+# 53. Caching & matrix
+SLIDES.append("""---
 ---
 
 # Performance & Scale — Caching & Matrix
@@ -1166,8 +889,10 @@ strategy:
 </div>
 
 </div>
+""")
 
----
+# 54. SHA pinning
+SLIDES.append("""---
 ---
 
 # Security Best Practices & SHA Pinning
@@ -1207,8 +932,10 @@ strategy:
 </div>
 
 </div>
+""")
 
----
+# 55. Runners
+SLIDES.append("""---
 ---
 
 # Runners — Where Your Jobs Execute
@@ -1225,8 +952,10 @@ strategy:
 <div class="pt-4 text-xs opacity-70 text-center">
 Use self-hosted when: <strong>private network access</strong> · <strong>large Docker cache</strong> · <strong>specialized hardware (GPU)</strong> · <strong>cost at scale</strong>
 </div>
+""")
 
----
+# 56. workflow_dispatch
+SLIDES.append("""---
 ---
 
 # Manual Triggers — `workflow_dispatch`
@@ -1256,8 +985,8 @@ on:
 
 **Trigger from CLI**
 ```bash
-gh workflow run deploy.yml \
-  --field environment=staging \
+gh workflow run deploy.yml \\
+  --field environment=staging \\
   --field dry-run=false
 ```
 
@@ -1267,8 +996,10 @@ On-demand deploy · Hotfix release · Database migration · Manual smoke test
 </div>
 
 </div>
+""")
 
----
+# 57. push trigger
+SLIDES.append("""---
 ---
 
 # Code Triggers — `push`
@@ -1312,8 +1043,10 @@ CI on every push · Tag-based releases · Path-scoped builds · Multi-branch pip
 </div>
 
 </div>
+""")
 
----
+# 58. PR trigger
+SLIDES.append("""---
 ---
 
 # PR Triggers — `pull_request`
@@ -1355,8 +1088,10 @@ Lint & test PRs · Required checks · Auto-label PRs · Preview deploys
 </div>
 
 </div>
+""")
 
----
+# 59. schedule
+SLIDES.append("""---
 ---
 
 # Scheduled Triggers — `schedule`
@@ -1394,8 +1129,10 @@ Nightly builds · Security scans · Dependency updates · Stale issue cleanup
 </div>
 
 </div>
+""")
 
----
+# 60. repository_dispatch
+SLIDES.append("""---
 ---
 
 # External Triggers — `repository_dispatch`
@@ -1427,9 +1164,9 @@ Any external system with a token can trigger the workflow.
 
 **`curl` example**
 ```bash
-curl -X POST \
-  -H "Authorization: token $GH_PAT" \
-  https://api.github.com/repos/O/R/dispatches \
+curl -X POST \\
+  -H "Authorization: token $GH_PAT" \\
+  https://api.github.com/repos/O/R/dispatches \\
   -d '{"event_type":"build-trigger"}'
 ```
 
@@ -1439,8 +1176,10 @@ External CI bridge · Cross-repo trigger · 3rd-party webhook · Custom automati
 </div>
 
 </div>
+""")
 
----
+# 61. workflow_run
+SLIDES.append("""---
 ---
 
 # Chained Triggers — `workflow_run`
@@ -1483,8 +1222,10 @@ Deploy after CI · Notify on success · Cleanup after build · Promote artifacts
 </div>
 
 </div>
+""")
 
----
+# 62. Marketplace
+SLIDES.append("""---
 ---
 
 # GitHub Actions Marketplace
@@ -1528,8 +1269,10 @@ Verified creators · Audit `action.yml` · SHA pinning · Dependabot updates
 </div>
 
 </div>
+""")
 
----
+# 63. Module 2 hands-on
+SLIDES.append("""---
 layout: center
 class: text-center
 ---
@@ -1555,8 +1298,10 @@ class: text-center
 <div class="pt-8 text-sm opacity-70">
 ⏱️ ~30 min  ·  <code>modules/02-github-actions/exercises/exercise.md</code>  ·  Stuck? → <code>solutions/02-ci-workflow/</code>
 </div>
+""")
 
----
+# 64. Break
+SLIDES.append("""---
 layout: center
 class: text-center
 ---
@@ -1568,8 +1313,10 @@ class: text-center
 <div class="pt-8 text-sm opacity-70">
 Grab coffee · Ask questions · Browse <code>resources/cheatsheet.md</code>
 </div>
+""")
 
----
+# 65. Module 3 divider
+SLIDES.append("""---
 layout: section
 ---
 
@@ -1578,8 +1325,10 @@ layout: section
 # Day-to-Day Operations<br>& Debugging
 
 <div class="text-lg opacity-70 pt-4">⏱️ 30 minutes</div>
+""")
 
----
+# 66. Monitoring runs
+SLIDES.append("""---
 ---
 
 # Monitoring Workflow Runs
@@ -1617,8 +1366,10 @@ gh run cancel <id>
 </div>
 
 </div>
+""")
 
----
+# 67. Artifacts
+SLIDES.append("""---
 ---
 
 # Artifacts — Persist & Share Build Outputs
@@ -1662,8 +1413,10 @@ gh run download <id> --name test-results
 </div>
 
 </div>
+""")
 
----
+# 68. Debugging
+SLIDES.append("""---
 ---
 
 # Debugging Workflows
@@ -1705,8 +1458,10 @@ echo "::group::Logs" && cat build.log && echo "::endgroup::"
 </div>
 
 </div>
+""")
 
----
+# 69. Module 3 hands-on
+SLIDES.append("""---
 layout: center
 class: text-center
 ---
@@ -1732,8 +1487,10 @@ class: text-center
 <div class="pt-8 text-sm opacity-70">
 ⏱️ ~15 min  ·  <code>modules/03-operations-debugging/exercises/exercise.md</code>  ·  Stuck? → <code>solutions/03-debugging/</code>
 </div>
+""")
 
----
+# 70. Key Takeaways
+SLIDES.append("""---
 ---
 
 # Key Takeaways
@@ -1771,8 +1528,10 @@ class: text-center
 </div>
 
 </div>
+""")
 
----
+# 71. Resources
+SLIDES.append("""---
 layout: center
 class: text-center
 ---
@@ -1810,3 +1569,11 @@ class: text-center
 <div class="pt-10 text-2xl">
 Thank you 🙏 — Questions?
 </div>
+""")
+
+
+content = "\n".join(SLIDES)
+with open("slides.md", "w", encoding="utf-8", newline="\n") as f:
+    f.write(content)
+
+print(f"Wrote slides.md with {len(SLIDES)} slides ({len(content)} chars)")
